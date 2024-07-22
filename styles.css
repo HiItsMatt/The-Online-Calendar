@@ -1,0 +1,51 @@
+html, body {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.7), 
+            rgba(0, 0, 0, 0.9)
+            ),
+        url(Assets/calendarImage.jpg);
+    height: 100%;
+    padding: 0%;
+    margin: 0%;
+    background-size: 100%;
+    position: relative;
+}
+
+.content{
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left:20%;
+    right:20%;
+}
+
+.page-heading{
+    background-color: white;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+
+h1{
+    text-align: center;
+    font-weight: 1000;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.button{
+    background-color: white;
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttons{
+    background-color: black;
+    position:absolute;
+    left: 0%;
+    right: 0%;
+    
+}
