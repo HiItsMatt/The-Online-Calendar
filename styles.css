@@ -1,72 +1,114 @@
+/* General Styles */
 html, body {
-    background: 
-        linear-gradient(
-            rgba(0, 0, 0, 0.7), 
-            rgba(0, 0, 0, 0.9)
-            ),
-        url(Assets/calendarImage.jpg);
-    height: 100%;
-    padding: 0%;
-    margin: 0%;
-    background-size: 100%;
-    position: relative;
-}
-
-.content{
     margin: 0;
-    position: absolute;
-    top: 40%;
-    left:30%;
-    right:30%;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: url('Assets/Background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
 }
 
-.page-heading{
-    background-color: white;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px;
+/* Navigation */
+header {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h1{
-    text-align: center;
-    font-weight: 100;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-a{
-    background-color: white;
-    min-width: 30%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 1000;
-    color: black;
-    transition: 0.1s;
-    border-style: solid;
-    text-decoration: none;
-}
-
-a:hover{
-    background-color: black;
-    color: aliceblue;
-}
-
-
-
-.button, p{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    border-radius: 10px;
-}
-
-.buttons{
+nav {
     display: flex;
-    position:absolute;
-    left: 10%;
-    right: 10%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-buttons .button {
+    background-color: #2196f3;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+    margin-left: 0.5rem;
+}
+
+.auth-buttons .button.primary {
+    background: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.auth-buttons .button:hover {
+    background: #333;
+    color: #fff;
+}
+
+main{
+    height: 80vh;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    width: 76vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 34vh;
+    padding-bottom: 34vh;
+    background: black;
+    border-radius: 10px;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    opacity: 70%;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-buttons .button {
+    margin: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    background: #4caf50;
+    border: 1px solid #4caf50;
+    transition: background 0.3s;
+}
+
+.hero-buttons .button.primary {
+    background: #2196f3;
+    border: 1px solid #2196f3;
+}
+
+.hero-buttons .button:hover {
+    background: #fff;
+    color: #000;
 }
