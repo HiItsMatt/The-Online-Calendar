@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Online Calendar</title>
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <script>
+
+            function onLoad() {
+                var x = document.getElementById("Login");
+                var y = document.getElementById("SignUp")
+                x.style.display = "none";
+                y.style.display = "none";
+            }
+
+            function toggleLogin() {
+                var loginPage = document.getElementById("Login");
+                var signUpPage = document.getElementById("SignUp");
+                loginPage.style.display = "block";
+                signUpPage.style.display = "none";
+
+                var loginButton = document.getElementById("loginButton");
+                loginButton.style.background = "rgba(255,255,255,0.5)";
+                loginButton.style.border = "1px solid white";
+                loginButton.style.color = "black";
+
+                var signUpButton = document.getElementById("signUpButton");
+                signUpButton.style.background = "rgba(0,0,0,0)";
+                signUpButton.style.border = "0px solid white";
+                signUpButton.style.color = "white";
+                signUpButton.style.border = "white";
+
+                document.getElementById('hero2').setAttribute("style","height:500px");
+            }
+
+            function toggleSignUp() {
+                var loginPage = document.getElementById("Login");
+                var signUpPage = document.getElementById("SignUp");
+                loginPage.style.display = "none";
+                signUpPage.style.display = "block";
+
+                var signUpButton = document.getElementById("signUpButton");
+                signUpButton.style.background = "rgba(255,255,255,0.5)";
+                signUpButton.style.border = "1px solid white";
+                signUpButton.style.color = "black";
+
+                var loginButton = document.getElementById("loginButton");
+                loginButton.style.background = "rgba(0,0,0,0)";
+                loginButton.style.border = "0px solid white";
+                loginButton.style.color = "white";
+
+                document.getElementById('hero2').setAttribute("style","height:500px");
+            }
+
+
+        </script>
+    </head>
+    <body onload="onLoad()">
+        <header>
+            <nav>
+                <div class="logo">The Online Calendar</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="login">Log In</a>
+                    <a href="login.html" class="sign-up">Sign Up</a>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section class="hero2" id="hero2">
+                <div class="modes">
+                    <button class ="buttonDefault" id="loginButton" onclick="toggleLogin()">Login</button>
+                    <button class ="buttonDefault" id="signUpButton" onclick="toggleSignUp()">Sign Up</button>
+                </div>
+                <div id="Login">
+                    <h1>Log In</h1>
+                    <form action="/action_page.php">
+                        <label class="prompt"for="password">Username:</label><br>
+                        <input class="textBox" type="text" id="username" name="username"><br>
+                        <label class="prompt" for="password">Password:</label><br>
+                        <input class="textBox" type="text" id="password" name="password"><br><br>
+                        <input type="submit" value="Submit">
+                    </form> 
+                </div>
+                <div id="SignUp">
+                    <h1>Sign Up</h1>
+                    <form action="/action_page.php">
+                        <label class="prompt"for="password">Username:</label><br>
+                        <input class="textBox" type="text" id="username" name="username"><br>
+                        <label class="prompt" for="password">Password:</label><br>
+                        <input class="textBox" type="text" id="password" name="password"><br><br>
+                        <input type="submit" value="Submit">
+                    </form> 
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
