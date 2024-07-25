@@ -11,8 +11,8 @@
             function onLoad() {
                 var x = document.getElementById("Login");
                 var y = document.getElementById("SignUp")
-                x.style.display = "none";
-                y.style.display = "none";
+                x.style.opacity = 0;
+                y.style.opacity = 0;
             }
 
             function toggleLogin() {
@@ -32,7 +32,10 @@
                 signUpButton.style.color = "white";
                 signUpButton.style.border = "white";
 
-                document.getElementById('hero2').setAttribute("style","height:500px");
+                document.getElementById("Login").style.transform = "translateY(50px)";
+
+                document.getElementById('hero2').setAttribute("style","height:40vh");
+                document.getElementById('Login').style.opacity = 1;
             }
 
             function toggleSignUp() {
@@ -51,7 +54,10 @@
                 loginButton.style.border = "0px solid white";
                 loginButton.style.color = "white";
 
-                document.getElementById('hero2').setAttribute("style","height:500px");
+                document.getElementById("SignUp").style.transform = "translateY(50px)";
+
+                document.getElementById('hero2').setAttribute("style","height:50vh")
+                document.getElementById('SignUp').style.opacity = 1;
             }
 
 
@@ -75,27 +81,41 @@
         <main>
             <section class="hero2" id="hero2">
                 <div class="modes">
-                    <button class ="buttonDefault" id="loginButton" onclick="toggleLogin()">Login</button>
+                    <button class ="buttonDefault" id="loginButton" onclick="toggleLogin()">Log in</button>
                     <button class ="buttonDefault" id="signUpButton" onclick="toggleSignUp()">Sign Up</button>
                 </div>
                 <div id="Login">
-                    <h1>Log In</h1>
-                    <form action="/action_page.php">
-                        <label class="prompt"for="password">Username:</label><br>
-                        <input class="textBox" type="text" id="username" name="username"><br>
-                        <label class="prompt" for="password">Password:</label><br>
-                        <input class="textBox" type="text" id="password" name="password"><br><br>
-                        <input type="submit" value="Submit">
+                    <form id="loginForm" action="/action_page.php">
+                        <label for="username">
+                            Username: 
+                            <input class="textBox" type="text" id="username" name="username">
+                        </label>
+                        <label for="password">
+                            Password: 
+                            <input class="textBox" type="text" id="password" name="password">
+                        </label>
+                        <input class="submit" type="submit" value="Submit">
                     </form> 
                 </div>
                 <div id="SignUp">
-                    <h1>Sign Up</h1>
-                    <form action="/action_page.php">
-                        <label class="prompt"for="password">Username:</label><br>
-                        <input class="textBox" type="text" id="username" name="username"><br>
-                        <label class="prompt" for="password">Password:</label><br>
-                        <input class="textBox" type="text" id="password" name="password"><br><br>
-                        <input type="submit" value="Submit">
+                    <form id="signUpForm" action="/action_page.php">
+                        <label for="email">
+                            Enter your email: 
+                            <input class="textBox" type="text" id="email" name="email">
+                        </label>
+                        <label for="username">
+                            Choose a Username: 
+                            <input class="textBox" type="text" id="username" name="username">
+                        </label>
+                        <label for="password">
+                            Choose a Password: 
+                            <input class="textBox" type="text" id="password" name="password">
+                        </label>
+                        <label for="password2">
+                            Retype your Password: 
+                            <input class="textBox" type="text" id="password2" name="password2">
+                        </label>
+                        <input class="submit" type="submit" value="Submit">
                     </form> 
                 </div>
             </section>
