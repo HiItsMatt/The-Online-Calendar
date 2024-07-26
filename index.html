@@ -6,30 +6,213 @@
         <title>The Online Calendar</title>
         <link rel="stylesheet" href="styles.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <script>
+
+            function onLoad() {
+                homepage();
+            }
+
+            function homePage(){
+                var homepage = document.getElementById("homepage");
+                homepage.style.display = "block";
+                var box = document.getElementById("hero2");
+                box.style.width = "50vw";
+                box.style.height = "35vh";
+                /*var modes = document.getElementById("login");
+                modes.style.display = "none";*/
+                var learnMore = document.getElementById("learnMore");
+                learnMore.style.display = "none";
+            }
+
+            /*function LoginPage(){
+                var login = document.getElementById("login");
+                var loginPage = document.getElementById("Login");
+                var signUpPage = document.getElementById("SignUp");
+                var modes = document.getElementById("modes");
+                login.style.display = "block";
+                modes.style.display = "flex";
+                loginPage.style.display = "none";
+                signUpPage.style.display = "none";
+
+                var loginButton = document.getElementById("loginButton");
+                loginButton.style.background = "rgba(0,0,0,0)";
+                loginButton.style.border = "0px solid white";
+                loginButton.style.color = "white";
+
+                var signUpButton = document.getElementById("signUpButton");
+                signUpButton.style.background = "rgba(0,0,0,0)";
+                signUpButton.style.border = "0px solid white";
+                signUpButton.style.color = "white";
+                signUpButton.style.border = "white";
+
+                document.getElementById('hero2').setAttribute("style","height:100px");
+                document.getElementById('Login').style.opacity = 1;
+
+                disableHomepage();
+                disableLearnMore();
+            }
+
+            function toggleLogin() {
+                
+                var loginPage = document.getElementById("Login");
+                var signUpPage = document.getElementById("SignUp");
+                loginPage.style.display = "block";
+                signUpPage.style.display = "none";
+
+                var loginButton = document.getElementById("loginButton");
+                loginButton.style.background = "rgba(255,255,255,0.5)";
+                loginButton.style.border = "1px solid white";
+                loginButton.style.color = "black";
+
+                var signUpButton = document.getElementById("signUpButton");
+                signUpButton.style.background = "rgba(0,0,0,0)";
+                signUpButton.style.border = "0px solid white";
+                signUpButton.style.color = "white";
+                signUpButton.style.border = "white";
+
+                document.getElementById("Login").style.transform = "translateY(50px)";
+
+                document.getElementById('hero2').setAttribute("style","height:42vh");
+                document.getElementById('Login').style.opacity = 1;
+
+                disableHomepage();
+                disableLearnMore();
+            }
+
+            function toggleSignUp() {
+                var loginPage = document.getElementById("Login");
+                var signUpPage = document.getElementById("SignUp");
+                loginPage.style.display = "none";
+                signUpPage.style.display = "block";
+
+                var signUpButton = document.getElementById("signUpButton");
+                signUpButton.style.background = "rgba(255,255,255,0.5)";
+                signUpButton.style.border = "1px solid white";
+                signUpButton.style.color = "black";
+
+                var loginButton = document.getElementById("loginButton");
+                loginButton.style.background = "rgba(0,0,0,0)";
+                loginButton.style.border = "0px solid white";
+                loginButton.style.color = "white";
+
+                document.getElementById("SignUp").style.transform = "translateY(50px)";
+
+                document.getElementById('hero2').setAttribute("style","height:60vh")
+                document.getElementById('SignUp').style.opacity = 1;
+
+                disableHomepage();
+                disableLearnMore();
+            }
+            */
+
+            function toggleLearnMore() {
+                var learnMore = document.getElementById("learnMore");
+                learnMore.style.display = "block";
+                var box = document.getElementById("hero2");
+                box.style.width = "50vw";
+                box.style.height = "30vh";
+                /*var modes = document.getElementById("login");
+                modes.style.display = "none";*/
+                var homepage = document.getElementById("homepage");
+                homepage.style.display = "none";
+            }
+
+            function disableLearnMore(){
+                document.getElementById("learnMore").style.display = "none";
+            }
+
+            /*function disableLoginPage(){
+                document.getElementById("modes").style.display = "none";
+                document.getElementById("Login").style.display = "none";
+                document.getElementById("SignUp").style.display = "none";
+                
+            }*/
+
+            function disableHomepage(){
+                var homepage = document.getElementById("homepage");
+                homepage.style.display = "none";
+                var box = document.getElementById("hero2");
+                box.style.width = "20vw";
+                var modes = document.getElementById("modes");
+                modes.style.opacity = "1";
+            }
+
+
+        </script>
     </head>
-    <body>
+    <body onload="onLoad()">
         <header>
             <nav>
-                <div class="logo">The Online Calendar</div>
-                <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+                <div class="logo"><a onclick="homePage()">The Online Calendar</a></div>
+                <div class="nav-container">
+                    <ul class="nav-links">
+                        <li><a href="#" onclick="homePage()">Home</a></li>
+                        <li><a href="#" onclick="toggleLearnMore()">Learn More</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
                 <div class="auth-buttons">
-                    <a href="login.html" class="login">Log In</a>
-                    <a href="#" class="sign-up">Sign Up</a>
+                    <a onclick="LoginPage()" class="login">Log In</a>
                 </div>
             </nav>
         </header>
         <main>
-            <section class="hero">
-                <h1>The Online Calendar</h1>
-                <p>Stay organized and never miss an important date again. Plan, track, and manage your events effortlessly.</p>
-                <div class="hero-buttons">
-                    <a href="login.html" class="sign-up">Get Started</a>
-                    <a href="login.html" class="login">Learn More</a>
+            <section class="hero2" id="hero2">
+                <div id="homepage">
+                    <h1>The Online Calendar</h1>
+                    <p>Stay organized and never miss an important date again. Plan, track, and manage your events effortlessly.</p>
+                    <div class="hero-buttons">
+                        <a href="calendar.html" class="blueButton">Get Started</a>
+                        <a onclick="toggleLearnMore()" class="greenButton">Learn More</a>
+                    </div>
                 </div>
+                <!--<div class="login" id="login">
+                    <div class="modes" id="modes">
+                        <button class ="buttonDefault" id="loginButton" onclick="toggleLogin()">Log in</button>
+                        <button class ="buttonDefault" id="signUpButton" onclick="toggleSignUp()">Sign Up</button>
+                    </div>
+                    <div id="Login">
+                        <form id="loginForm" action="/action_page.php">
+                            <label for="username">
+                                Username: 
+                                <input class="textBox" type="text" id="username" name="username">
+                            </label>
+                            <label for="password">
+                                Password: 
+                                <input class="textBox" type="password" id="password" name="password">
+                            </label>
+                            <input class="submit" type="submit" value="Submit">
+                        </form> 
+                    </div>
+                    <div id="SignUp">
+                        <form id="signUpForm" action="/action_page.php">
+                            <label for="email">
+                                Enter your email: 
+                                <input class="textBox" type="text" id="email" name="email">
+                            </label>
+                            <label for="username">
+                                Choose a Username: 
+                                <input class="textBox" type="text" id="username" name="username">
+                            </label>
+                            <label for="password">
+                                Choose a Password: 
+                                <input class="textBox" type="password" id="password" name="password">
+                            </label>
+                            <label for="password2">
+                                Retype your Password: 
+                                <input class="textBox" type="password" id="password2" name="password2">
+                            </label>
+                            <input class="submit" type="submit" value="Submit">
+                        </form> 
+                    </div>
+                </div>-->
+                <div class="learnMore" id="learnMore">
+                    <h1>Learn More</h1>
+                    <p>Created By: Matthew Shanahan</p>
+                    <a  href="https://github.com/HiItsMatt" target="_blank">
+                        <button class="blueButton">My Github</button>
+                    </a>
+                    <button class="greenButton">Contact Me</button>
             </section>
         </main>
     </body>

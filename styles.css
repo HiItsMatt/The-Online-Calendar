@@ -6,6 +6,9 @@ html, body {
     background: url('Assets/Background.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
+    margin: 0;
+    height: 100%;
+    overflow: hidden
 }
 
 /* Navigation */
@@ -25,6 +28,17 @@ nav {
     font-size: 1.5rem;
     font-weight: 700;
     color: #333;
+}
+
+.logo, a{
+    color: black;
+    text-decoration: none;
+}
+
+.nav-container {
+    flex: 1;
+    display: absolute;
+    justify-content: center;
 }
 
 .nav-links {
@@ -49,23 +63,7 @@ nav {
     margin-left: 0.5rem;
 }
 
-.auth-buttons .sign-up {
-    background-color: #4caf50;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background 0.3s;
-    margin-left: 0.5rem;
-}
-
 .auth-buttons .login:hover {
-    background: #333;
-    color: #fff;
-}
-
-
-.auth-buttons .sign-up:hover {
     background: #333;
     color: #fff;
 }
@@ -78,32 +76,11 @@ main{
 }
 
 /* Hero Section */
-.hero{
-    position: absolute;
-    text-align: center;
-    width: 50vw;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    border-radius: 10px;
-    top: 20%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.5); 
-    border: 1px solid white;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-
 .hero2{
     position: absolute;
     text-align: center;
-    width: 20vw;
-    height: 100px;
+    width: 50vw;
+    height: 35vh;
     border-radius: 10px;
     top: 20%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -119,7 +96,9 @@ main{
 }
 
 .modes{
-    display:flex;
+    opacity: 0;
+    display: flex;
+    height: 100px;
 }
 
 .prompt{
@@ -128,6 +107,12 @@ main{
 
 label, input {
     display: block;
+}
+
+p{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 label {
@@ -151,19 +136,63 @@ label {
 .submit{
     margin-left: auto;
     margin-right: auto;
+    padding: 1rem;
+    width:10vw;
+    border-radius: 5px;
+    border: 0px solid white;
+    text-decoration: none;
+    color: #fff;
+    background: #4caf50;
+    transition: background 0.3s;
     font-size: 20px;
-    border-radius: 30px;
-    padding: 5px;
-    background: rgba(50,50,50,255);
-    color:white;
-    border:0px;
-    padding: 10px;
     transition: all 0.3;
 }
 
 .submit:hover{
     border: 1px solid white;
 }
+
+.blueButton{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    width:30%;
+    border-radius: 5px;
+    border: 0px solid white;
+    text-decoration: none;
+    color: #fff;
+    background: #2196f3;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+}
+
+.blueButton:hover {
+    background: #fff;
+    color: #000;
+}
+
+.greenButton{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    width:30%;
+    border-radius: 5px;
+    border: 0px solid white;
+    text-decoration: none;
+    color: #fff;
+    background: #4caf50;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+}
+
+.greenButton:hover {
+    background: #fff;
+    color: #000;
+}
+
+
 
 .buttonDefault{
     width:100%;
@@ -219,35 +248,122 @@ label {
     margin-bottom: 2rem;
 }
 
+.hero-buttons{
+    margin-top: 5vh;
+}
+
 .hero-buttons .login {
-    margin: 1rem;
-    margin-top: 3rem;
-    padding: 1rem 2rem;
+    padding: 1rem;
+    width:30%;
     border-radius: 5px;
     text-decoration: none;
     color: #fff;
     background: #4caf50;
-    border: 1px solid #4caf50;
     transition: background 0.3s;
     
 }
 
-.hero-buttons .sign-up {
-    margin: 0.5rem;
-    padding: 1rem 2rem;
-    border-radius: 5px;
+.hero-buttons .signUp {
+    padding: 1rem;
+    width:30%;
     text-decoration: none;
+    border-radius: 5px;
     color: #fff;
     background: #2196f3;
-    border: 1px solid #2196f3;
+    transition: background 0.3s;
 }
+
+.learnMore{
+    display: none;
+}
+
 
 .hero-buttons .login:hover {
     background: #fff;
     color: #000;
 }
 
-.hero-buttons .sign-up:hover{
+.hero-buttons .signUp:hover{
     background: #fff;
     color: #000;
+}
+
+.hero-buttons .learnMore:hover {
+    background: #fff;
+    color: #000;
+}
+
+#calendarHeader {
+    width: calc(100vw - 400px);
+    display: block;
+    background: rgba(255, 255, 255, 1);
+    border: black 3px solid;
+    border-radius: 10px;
+    clear: both;
+}
+
+#calendarHeader h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #000;
+}
+
+#calendarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#calendarTable {
+    width: calc(100vw - 400px);
+}
+
+thead {
+    height: 100px;
+    display: flex;
+    background: rgba(255, 255, 255, 1);
+    color: black;
+}
+
+tr {
+    display: flex;
+    width: 100%;
+}
+
+th, td {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.4);
+    color: black; /* 100% / 7 columns */
+    height: 100px; /* Fixed height for each cell */
+    text-align: center;
+    border: 1px solid black; /* Optional: Add border for better visibility */
+    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+}
+
+#leftSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px; /* Adjust the width as needed */
+    height: 100vh; /* Full height of the viewport */
+    background: rgba(255, 255, 255, 0.9);
+    border-right: 1px solid black;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow-y: auto; /* Add vertical scrolling if content overflows */
+}
+
+#mainContent {
+    margin-left: 400px; /* Sidebar width (200px) + padding (20px) */
+    box-sizing: border-box;
+}
+
+.current-date {
+    background-color: rgba(255, 0, 0, 0.5); /* Highlight color */
+    color: black; /* Text color */
+    font-weight: bold; /* Make the text bold */
+    border: 2px solid red; /* Optional: Add a border for better visibility */
 }

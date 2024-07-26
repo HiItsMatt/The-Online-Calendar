@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Online Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body onload="onLoad()">
+    
+    <div id="leftSidebar">
+        <!-- Add your sidebar content here -->
+    </div>
+    <div id="mainContent">
+            <header>
+                <nav>
+                    <div class="logo"><a href="index.html">The Online Calendar</a></div>
+                    <div class="nav-container">
+                        <ul class="nav-links">
+                            <li><a href="index.html ">Home</a></li>
+                            <li><a href="#" onclick="toggleLearnMore()">Learn More</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <main>
+            <div id="calendarContainer">
+                <div id="calendarHeader">
+                    <h1 id="monthYear"></h1>
+                </div>
+                <table id="calendarTable">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>         
+        </main>
+    </div>
+    <script src="calendarScript.js"></script>
+</body>
+</html>
