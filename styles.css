@@ -13,15 +13,19 @@ html, body {
 
 /* Navigation */
 header {
+    width: 100%;
     background: rgba(255, 255, 255, 0.9);
-    padding: 1rem 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
 }
 
 .logo {
@@ -294,43 +298,60 @@ label {
 }
 
 #calendarHeader {
+    height: 100px;
     width: calc(100vw - 400px);
     display: block;
     background: rgba(255, 255, 255, 1);
-    border: black 3px solid;
-    border-radius: 10px;
+    border: black 2px solid;
     clear: both;
+    text-align: center;
+    transition: all 0.3s;
 }
 
 #calendarHeader h1 {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
     text-align: center;
     color: #000;
+    transition: all 0.3s;
 }
 
 #calendarContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
 }
 
 #calendarTable {
     width: calc(100vw - 400px);
+    table-layout: fixed;
+    border-collapse: collapse;
+    height: 100%;
+    transition: all 0.3s;
+}
+
+#calendarTable th {
+    text-align: center;
+    vertical-align: middle;
 }
 
 thead {
     height: 100px;
-    display: flex;
     background: rgba(255, 255, 255, 1);
     color: black;
 }
 
 tr {
-    display: flex;
     width: 100%;
+}
+
+th {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border: 2px dashed #f69c55;
+    font-family: 'Raleway', sans-serif;
+    font-size: 50px;
 }
 
 th, td {
@@ -338,32 +359,242 @@ th, td {
     background: rgba(255, 255, 255, 0.4);
     color: black; /* 100% / 7 columns */
     height: 100px; /* Fixed height for each cell */
-    text-align: center;
+    vertical-align: top;
+    text-align: left;
     border: 1px solid black; /* Optional: Add border for better visibility */
     box-sizing: border-box; /* Ensure padding and border are included in the width and height */
 }
 
 #leftSidebar {
+    display: flex;
     position: fixed;
-    top: 0;
+    top: 100px;
     left: 0;
     width: 400px; /* Adjust the width as needed */
     height: 100vh; /* Full height of the viewport */
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.4);
     border-right: 1px solid black;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     overflow-y: auto; /* Add vertical scrolling if content overflows */
+    transition: all 0.3s;
+}
+
+#leftSidebar.minimized {
+    width: 0px;
+    overflow: hidden;
+}
+
+.mainCalendar {
+    margin-left: 400px;
+    transition: all 0.3s;
 }
 
 #mainContent {
-    margin-left: 400px; /* Sidebar width (200px) + padding (20px) */
     box-sizing: border-box;
 }
 
 .current-date {
-    background-color: rgba(255, 0, 0, 0.5); /* Highlight color */
+    background-color: rgba(255, 255, 255, 0.5); /* Highlight color */
     color: black; /* Text color */
     font-weight: bold; /* Make the text bold */
     border: 2px solid red; /* Optional: Add a border for better visibility */
+    
+}
+
+td:hover{
+    transition: all 0.3s;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.7)
+    
+}
+
+#maximiseButton{
+    display: none;
+    width: 50px;
+    height: calc(100vh - 100px);
+    right: 0px;
+    border: 0px solid black;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#minimiseButton{
+    height: calc(100vh - 100px);
+    width: 50px;
+    right: 0px;
+    border: 0px solid black;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#maximiseButton:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    ;
+    
+}
+
+#minimiseButton:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#sidebarContent{
+    height: calc(100vh - 100px);
+    width: calc(400px - 50px);
+}
+
+#eventCreation{
+    padding: 10px;
+    width: 90%;
+    margin: 10px;
+    right: 0px;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventCreation:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#eventCreationMenu{
+    display: none;
+    height: 0px;
+    margin: 10px;
+    padding-top: 10px;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    transition: all 0.3;
+    
+
+}
+
+#eventCreationMenu label{
+    color: black;
+    font-size: 20px;
+    width: calc(100% - 50px);
+    transition: all 0.3;
+    margin: 10px;
+
+}
+
+#eventTitle{
+    padding: 10px;
+    width: 100%;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventTitle:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#eventDate{
+    padding: 10px;
+    width: 100%;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventDate:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#eventTime{
+    padding: 10px;
+    width: 100%;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventTime:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#eventDescription{
+    padding:10px;
+    width: 100%;
+    right: 0px;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventDescription:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#eventColour{
+    height: 50px;
+    width: 110%;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+}
+
+#eventColour:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    
+}
+
+#makeNewEvent{
+    padding:10px;
+    margin:10px;
+    width: calc(100% - 20px);
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+    background-color: green;
+    color: white;
+}
+
+#makeNewEvent:hover{
+    background: black;
+    color: greenyellow;
+    border: 2px solid greenyellow;
 }

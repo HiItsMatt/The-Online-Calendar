@@ -17,17 +17,25 @@ function onLoad() {
 
     // Generate the calendar rows and cells
     let date = 1;
-    for (let i = 0; i < 6; i++) { // 6 weeks to cover all possible days in a month
+
+    let weeksNeeded = Math.ceil((firstDay + daysInMonth) / 7);
+
+    for (let i = 0; i < weeksNeeded; i++) { // 6 weeks to cover all possible days in a month
         const row = document.createElement('tr');
+        row.style.height= '';
 
         for (let j = 0; j < 7; j++) {
             const cell = document.createElement('td');
             if (i === 0 && j < firstDay) {
                 // Empty cells before the first day of the month
                 cell.textContent = '';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                cell.style.border = '1px solid black';
             } else if (date > daysInMonth) {
                 // Empty cells after the last day of the month
                 cell.textContent = '';
+                cell.style.border = '1px solid black';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
             } else {
                 // Fill in the date
                 cell.textContent = date;
@@ -111,27 +119,33 @@ function getDaysInMonth(month) {
     }
 }
 
-function populateCalendar(month, year) {
-    var firstDay = new Date(year, month, 1).getDay();
-    var daysInMonth = getDaysInMonth(month, year);
-    var table = document.getElementById('calendarTable').getElementsByTagName('tbody')[0];
-    table.innerHTML = ''; // Clear previous rows
+function minimiseSidebar(){
+    document.getElementById("leftSidebar").style.width = "50px";
+    document.getElementsByClassName("mainCalendar")[0].style.marginLeft = "50px";
+    document.getElementsByClassName("mainCalendar")[0].style.width = "calc(100vw - 50px)";
+    document.getElementById("calendarTable").style.width = "calc(100vw - 50px)";
+    document.getElementById("calendarHeader").style.width = "calc(100vw - 50px)";
+    document.getElementById("maximiseButton").style.display = "block";
+    document.getElementById("minimiseButton").style.display = "none";
+    document.getElementById("sidebarContent").style.display = "none";
+}
 
-    var date = 1;
-    for (var i = 0; i < 5; i++) {
-        var row = document.createElement('tr');
-        for (var j = 0; j < 7; j++) {
-            var cell = document.createElement('td');
-            if (i === 0 && j < firstDay) {
-                cell.textContent = '';
-            } else if (date > daysInMonth) {
-                cell.textContent = '';
-            } else {
-                cell.textContent = date;
-                date++;
-            }
-            row.appendChild(cell);
-        }
-        table.appendChild(row);
-    }
+function maximiseSidebar(){
+    document.getElementById("leftSidebar").style.width = "400px";
+    document.getElementsByClassName("mainCalendar")[0].style.marginLeft = "400px";
+    document.getElementsByClassName("mainCalendar")[0].style.width = "100%";
+    document.getElementById("calendarTable").style.width = "calc(100vw - 400px)";
+    document.getElementById("calendarHeader").style.width = "calc(100vw - 400px)";
+    document.getElementById("maximiseButton").style.display = "none";
+    document.getElementById("maximiseButton").style.display = "none";
+    document.getElementById("minimiseButton").style.display = "block";
+    document.getElementById("sidebarContent").style.display = "block";
+}
+
+function eventCreationMenu(){
+    document.getElementById("eventCreationMenu").style.display = "block";
+    document.getElementById("eventCreationMenu").style.height = "400px";
+}
+
+function createEvent(){
 }

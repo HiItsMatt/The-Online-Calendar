@@ -5,27 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Online Calendar</title>
     <link rel="stylesheet" href="styles.css">
-    
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lato:wght@400;700&family=Poppins:wght@400;700&family=Open+Sans:wght@400;700&family=Raleway:wght@400;700&family=Oswald:wght@400;700&family=Montserrat:wght@400;700&family=Nunito:wght@400;700&family=Work+Sans:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <body onload="onLoad()">
     
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">The Online Calendar</a></div>
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="index.html ">Home</a></li>
+                    <li><a href="#" onclick="toggleLearnMore()">Learn More</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <div id="leftSidebar">
-        <!-- Add your sidebar content here -->
+        <div id="sidebarContent">
+            <button id="eventCreation" onclick="eventCreationMenu()">+ Create New Event</button>
+            <div id="eventCreationMenu">
+                <label class="eventLabel" for="eventTitle">
+                    <input type="text" id="eventTitle" placeholder="Event Title">
+                </label>
+                <label class="eventLabel"for="eventDate">
+                <input type="date" id="eventDate">
+                </label>
+                <label class="eventLabel" for="eventTime">
+                    <input type="time" id="eventTime">
+                </label>
+                <label class="eventLabel" for="eventDescription">
+                    <textarea id="eventDescription" placeholder="Event Description"></textarea>
+                </label>
+                <label for="eventColour">
+                    <input type="color" id="eventColour" value="#89cff0" ></input>
+                </label>
+                <button id="makeNewEvent" onclick="createEvent()">Submit Event</button>
+            </div>
+        </div>
+        <button id="minimiseButton" onclick="minimiseSidebar()">&#8592</button>
+        <button id="maximiseButton" onclick="maximiseSidebar()">&#8594</button>
     </div>
-    <div id="mainContent">
-            <header>
-                <nav>
-                    <div class="logo"><a href="index.html">The Online Calendar</a></div>
-                    <div class="nav-container">
-                        <ul class="nav-links">
-                            <li><a href="index.html ">Home</a></li>
-                            <li><a href="#" onclick="toggleLearnMore()">Learn More</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-            <main>
+    <div id="mainContent"></div>
+        <main class="mainCalendar">
             <div id="calendarContainer">
                 <div id="calendarHeader">
                     <h1 id="monthYear"></h1>
