@@ -22,25 +22,32 @@
     </header>
     <div id="leftSidebar">
         <div id="sidebarContent">
-            <button id="eventCreation" onclick="eventCreationMenu()">+ Create New Event</button>
-            <div id="eventCreationMenu">
-                <label class="eventLabel" for="eventTitle">
-                    <input type="text" id="eventTitle" placeholder="Event Title">
-                </label>
-                <label class="eventLabel"for="eventDate">
-                <input type="date" id="eventDate">
-                </label>
-                <label class="eventLabel" for="eventTime">
-                    <input type="time" id="eventTime">
-                </label>
-                <label class="eventLabel" for="eventDescription">
-                    <textarea id="eventDescription" placeholder="Event Description"></textarea>
-                </label>
-                <label for="eventColour">
-                    <input type="color" id="eventColour" value="#89cff0" ></input>
-                </label>
-                <button id="makeNewEvent" onclick="createEvent()">Submit Event</button>
+            <div class="eventCreationMenu">
+                <button id="eventCreation" onclick="eventCreationMenu()">+ Event Creator</button>
+                <input type="text" class="eventCreationField" id="eventTitle" placeholder="Event Title">
+                <input type="date" class="eventCreationField" id="eventDate">
+                <input type="time" class="eventCreationField" id="eventTime">
+                <textarea id="eventDescription" class="eventCreationField" placeholder="Event Description"></textarea>
+                <input type="color" id="eventColour" value="#89cff0" ></input>
+                <div id="repeat">
+                    <input type="checkbox" id="repeatEvent" class="custom-checkbox" onclick="displayRepeatOptions()">
+                    <label for="repeatEvent">Repeat</label>
+                    <select id="repeatFrequency" class="repeatFrequency">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+                <button id="makeNewEvent" onclick="createNewEvent()">Create</button>
             </div>
+            <div id="eventList">
+                <button class="upcomingEvents">Upcoming Events</button>
+                <div id="eventListItems">
+                    <!--Event elements added here by JavaScript-->
+                </div>
+            </div>
+            <button id="clearEventsButton" onclick="clearEvents()">Clear All Events</button>
         </div>
         <button id="minimiseButton" onclick="minimiseSidebar()">&#8592</button>
         <button id="maximiseButton" onclick="maximiseSidebar()">&#8594</button>

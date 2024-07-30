@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: url('Assets/Background.jpg') no-repeat center center fixed;
+    background: url('Assets/Background.png') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
     margin: 0;
@@ -365,6 +365,12 @@ th, td {
     box-sizing: border-box; /* Ensure padding and border are included in the width and height */
 }
 
+td:hover{
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.7)
+}
+
 #leftSidebar {
     display: flex;
     position: fixed;
@@ -399,14 +405,6 @@ th, td {
     color: black; /* Text color */
     font-weight: bold; /* Make the text bold */
     border: 2px solid red; /* Optional: Add a border for better visibility */
-    
-}
-
-td:hover{
-    transition: all 0.3s;
-    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.7)
     
 }
 
@@ -454,49 +452,47 @@ td:hover{
 }
 
 #eventCreation{
-    padding: 10px;
     width: 90%;
+    padding: 10px;
+    left: auto;
+    right: auto;
     margin: 10px;
-    right: 0px;
     border: 2px solid white;
     transition: background 0.3s;
     font-size: 20px;
     transition: all 0.3;
-    border-radius: 10px;
+    border-radius: 10px; 
 }
 
 #eventCreation:hover{
     background: black;
     color: white;
-    border: 2px solid white;
-    
+    border: 2px solid white;   
 }
 
-#eventCreationMenu{
-    display: none;
-    height: 0px;
+.eventCreationMenu{
+    height: 65px;
+    display: block;
     margin: 10px;
-    padding-top: 10px;
+    padding: 10px;
     background: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    transition: all 0.3;
-    
-
+    overflow: hidden; /* Ensure content doesn't overflow */
+    transition: height 0.3s ease;
 }
 
-#eventCreationMenu label{
-    color: black;
-    font-size: 20px;
-    width: calc(100% - 50px);
-    transition: all 0.3;
+.eventCreationMenu.open{
+    height: 85%;
+}
+
+.eventCreationField {
+    display: none;
     margin: 10px;
-
-}
-
-#eventTitle{
+    width: 82%;
     padding: 10px;
-    width: 100%;
+    left: auto;
+    right: auto;
     border: 2px solid white;
     transition: background 0.3s;
     font-size: 20px;
@@ -504,59 +500,78 @@ td:hover{
     border-radius: 10px;
 }
 
-#eventTitle:hover{
+/* Hide the default checkbox */
+.custom-checkbox {
+    display: none;
+}
+
+/* Create a custom checkbox */
+.custom-checkbox + label {
+    position: relative;
+    margin: 10px;
+    width: 82%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+    color: black;
+    border: 2px solid white;
+    border-radius: 10px;
+    background: white;
+    transition: all 0.3s;
+}
+
+.custom-checkbox + label:hover {
+    border: black 2px solid;
+}
+
+/* Change background color and text color when checked */
+.custom-checkbox:checked + label {
     background: black;
     color: white;
-    border: 2px solid white;
-    
 }
 
-#eventDate{
-    padding: 10px;
-    width: 100%;
-    border: 2px solid white;
-    transition: background 0.3s;
-    font-size: 20px;
-    transition: all 0.3;
-    border-radius: 10px;
+/* Create the checkmark/indicator (hidden when not checked) */
+.custom-checkbox + label:after {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    opacity: 0;
+    transition: opacity 0.1s;
 }
 
-#eventDate:hover{
+/* Show the checkmark when checked */
+.custom-checkbox:checked + label:after {
+    opacity: 1;
+}
+
+/* Change background color when checked */
+.custom-checkbox:checked + label:before {
     background: black;
-    color: white;
-    border: 2px solid white;
-    
 }
 
-#eventTime{
+.repeatFrequency{
+    display: none !important;
+    margin: 10px;
+    width: 90%;
     padding: 10px;
-    width: 100%;
+    left: auto;
+    right: auto;
     border: 2px solid white;
-    transition: background 0.3s;
-    font-size: 20px;
-    transition: all 0.3;
     border-radius: 10px;
 }
 
-#eventTime:hover{
-    background: black;
-    color: white;
-    border: 2px solid white;
-    
+.custom-checkbox:checked ~ .repeatFrequency{
+    display: block !important;
 }
 
-#eventDescription{
-    padding:10px;
-    width: 100%;
-    right: 0px;
-    border: 2px solid white;
-    transition: background 0.3s;
-    font-size: 20px;
-    transition: all 0.3;
-    border-radius: 10px;
-}
-
-#eventDescription:hover{
+.eventCreationField:hover{
     background: black;
     color: white;
     border: 2px solid white;
@@ -564,8 +579,13 @@ td:hover{
 }
 
 #eventColour{
+    margin: 10px;
+    display: none;
     height: 50px;
-    width: 110%;
+    width: 90%;
+    left: auto;
+    right: auto;
+    margin: 10px;
     border: 2px solid white;
     transition: background 0.3s;
     font-size: 20px;
@@ -577,13 +597,15 @@ td:hover{
     background: black;
     color: white;
     border: 2px solid white;
-    
 }
 
 #makeNewEvent{
-    padding:10px;
-    margin:10px;
-    width: calc(100% - 20px);
+    margin: 10px;
+    display: none;
+    height: 50px;
+    width: 90%;
+    left: auto;
+    right: auto;
     border: 2px solid white;
     transition: background 0.3s;
     font-size: 20px;
@@ -597,4 +619,141 @@ td:hover{
     background: black;
     color: greenyellow;
     border: 2px solid greenyellow;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+#eventList{
+    height: auto;
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden; /* Ensure content doesn't overflow */
+    transition: height 0.3s ease;
+}
+
+.upcomingEvents{
+    width: 90%;
+    padding: 10px;
+    left: auto;
+    right: auto;
+    margin: 10px;
+    border: 2px solid white;
+    transition: background 0.3s;
+    font-size: 30px;
+    transition: all 0.3;
+    border-radius: 10px; 
+}
+
+.eventItem{
+    width: 90%;
+    padding: 10px;
+    left: auto;
+    right: auto;
+    margin: 10px;
+    transition: all 0.3s ease;
+    font-size: 20px;
+    border-radius: 10px; 
+    border: 3px solid;
+    text-align: left;
+    max-height: 100px; /* Initial max-height */
+    overflow: hidden;
+}
+
+.eventItem.detailsVisible{
+    max-height: 500px; /* Expanded max-height */
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+button.eventItem:hover{
+    background-color: rgba(0, 0, 0, 1) !important; /* Darken background on hover */
+    color: white;
+    border: 3px solid white !important; 
+}
+
+#clearEventsButton{
+    bottom: 0;
+    position: fixed;
+    width: calc(350px);
+    background-color: rgb(100, 0, 0);
+    border: rgb(255, 0, 0) 2px solid;
+    border-radius: 10px;
+    color: white;
+    height: 100px;
+    font-size: 30px;
+    transition: all 0.3s;
+}
+
+#clearEventsButton:hover{
+    background-color: rgb(255, 100, 100);
+    border: rgb(255, 255, 255) 2px solid;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
+}
+
+.noEventsBox{
+    width: 90%;
+    padding: 10px;
+    left: auto;
+    right: auto;
+    margin: 10px;
+    color: grey;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px; 
+    border: 3px solid;
+    text-align: left;
+}
+
+.eventTitle{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.eventDetail{
+    padding: 5px;
+}
+
+.eventOptions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventEdit, .eventDelete {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.eventEdit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    transition: all 0.3s;
+}
+
+.eventDelete {
+    background-color: #f44336; /* Red */
+    color: white;
+    transition: all 0.3s;
+}
+
+.eventDelete:hover {
+    background-color: rgb(255, 100, 100);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
+}
+
+.eventEdit:hover {
+    background-color: #87ff8b;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 1); /* Add glowing effect */
 }
