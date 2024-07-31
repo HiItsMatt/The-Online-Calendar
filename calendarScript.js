@@ -18,6 +18,9 @@ function onLoad() {
     // Generate the calendar rows and cells
     let date = 1;
 
+    //get the events from local storage
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+
     let weeksNeeded = Math.ceil((firstDay + daysInMonth) / 7);
 
     for (let i = 0; i < weeksNeeded; i++) { // 6 weeks to cover all possible days in a month
@@ -26,23 +29,134 @@ function onLoad() {
 
         for (let j = 0; j < 7; j++) {
             const cell = document.createElement('td');
+            
             if (i === 0 && j < firstDay) {
 
                 // Empty cells before the first day of the month
                 cell.textContent = '';
                 cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
                 cell.style.border = '1px solid black';
-            } else if (date > daysInMonth) {
+            }
+            else if (date > daysInMonth) {
 
                 // Empty cells after the last day of the month
                 cell.textContent = '';
-                cell.style.border = '1px solid black';
+                cell.style.border = '1px solid transparent';
                 cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-            } else {
+            }
+            else {
+                cell.classList.add('calendar-cell');
 
-                // Fill in the date
-                cell.textContent = date;
+                //create an event container to go inside cell
+                const eventContainer = document.createElement('div');
+                eventContainer.classList.add('eventContainer');
+                eventContainer.innerHTML = `<div class="date">${date}</div>`;
 
+                //check if an event is on this date
+                for(let i = 0; i < events.length; i++){
+                    let event = events[i];
+                    let eventDate = new Date(event.date);
+                    if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
+                        let calendarEvent = document.createElement('div');
+                        
+                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                        calendarEvent.style.borderWidth = "2px";
+                        calendarEvent.style.borderStyle = "solid";
+                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                        calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                        calendarEvent.classList.add('calendarEvent');
+
+                        eventContainer.appendChild(calendarEvent);
+                        
+                    }
+                    //check if an event is repeating on this date
+                    if(event.repeatFrequency != "none"){
+                        let checkingDate = new Date(currentYear, currentMonth, eventDate.getDate());
+                        while(checkingDate.getDate() < date){
+                            if(event.repeat == "weekly"){
+                                checkingDate.setDate(checkingDate.getDate() + 7);
+                            }
+                            else if(event.repeat == "monthly"){
+                                checkingDate.setMonth(checkingDate.getMonth() + 1);
+                            }
+                            else if(event.repeat == "yearly"){
+                                checkingDate.setFullYear(checkingDate.getFullYear() + 1);
+                            }
+                            else{
+                                break;
+                            }
+                            if(checkingDate.getDate() == date && checkingDate.getMonth() == currentMonth && checkingDate.getFullYear() == currentYear){
+                                let calendarEvent = document.createElement('div');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                        }
+                    }
+                }
+                cell.appendChild(eventContainer);
+                cell.style.transition = "all 0.3s !important";
+                cell.addEventListener('click', () => {
+                    if(cell.classList.contains('clicked')){
+                        cell.classList.remove('clicked');
+                        cell.style.position = '';
+                        cell.style.left = '';
+                        cell.style.top = '';
+                        cell.style.width = '';
+                        cell.style.height = '';
+
+                        const elements = cell.querySelectorAll(`.${"calendarEvent"}`);
+                        elements.forEach(element => {
+                            element.classList.remove("enlarged");
+
+                            elements.forEach(element => {
+                                element.classList.remove('enlarged');
+    
+                                const details = element.querySelector('.calendarEventDetails');
+                                if (details) {
+                                    details.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                    else{
+                        cell.classList.add('clicked');
+                        cell.style.position = "fixed"; 
+
+                        const rect = cell.getBoundingClientRect();
+                        const newLeft = rect.left + (0.5 * rect.width) - 100;
+                        const newTop = rect.top + (0.5 * rect.height) - 175;
+                        const newWidth = 400;
+                        const newHeight = 400;
+                        
+                        const elements = cell.querySelectorAll('.calendarEvent');
+                        elements.forEach(element => {
+                            element.classList.add('enlarged');
+
+                            const details = element.querySelector('.calendarEventDetails');
+                            if (details) {
+                                details.style.display = 'block';
+                            }
+                        });
+
+                        cell.style.width = `${newWidth}px`;
+                        cell.style.height = `${newHeight}px`;
+                        cell.style.left = `${newLeft}px`;
+                        cell.style.top = `${newTop}px`;                                                            
+                    }
+                });
+                
+                cell.addEventListener('mouseover', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.7)";
+                });
+                cell.addEventListener('mouseout', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.4)";
+                });
+                
                 // Highlight the current date
                 if (date === currentDate && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
                     cell.classList.add('current-date');
@@ -82,6 +196,13 @@ function isLeapYear(year) {
     else{
         return false;
     }
+}
+
+function convertToRGBA(hex, alpha) {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 //get the number of days in a month
@@ -323,36 +444,45 @@ function displayStoredEvents() {
 
 // Example implementation of getClosestRepeatEvent function
 function getClosestRepeatEvent(event, now) {
-    let eventDate = new Date(`${event.date}T${event.time}`);
+    console.log(`Original event date and time: ${event.date} ${event.time}`);
+    
+    // Parse the event date and time as UTC
+    let eventDate = new Date(`${event.date}T${event.time}:00.000Z`);
+    console.log(`Parsed eventDate (UTC): ${eventDate.toISOString()}`);
+    
     while (eventDate <= now) {
-        if (event.repeatFrequency = "weekly") {
-            eventDate.setDate(eventDate.getDate() + 7);
-        } else if (event.repeatFrequency = "monthly") {
-            eventDate.setMonth(eventDate.getMonth() + 1);
-        } else if (event.repeatFrequency = "yearly") {
-            eventDate.setFullYear(eventDate.getFullYear() + 1);
+        if (event.repeatFrequency === "weekly") {
+            eventDate.setUTCDate(eventDate.getUTCDate() + 7);
+        } else if (event.repeatFrequency === "monthly") {
+            eventDate.setUTCMonth(eventDate.getUTCMonth() + 1);
+        } else if (event.repeatFrequency === "yearly") {
+            eventDate.setUTCFullYear(eventDate.getUTCFullYear() + 1);
         } else {
             // If no valid repeat frequency is found, break the loop to avoid infinite loop
             break;
         }
+        console.log(`Updated eventDate (UTC): ${eventDate.toISOString()}`);
     }
+    
+    // Convert back to local time for display
     event.date = eventDate.toISOString().split('T')[0];
     event.time = eventDate.toISOString().split('T')[1].substring(0, 5);
+    console.log(`Updated event date and time: ${event.date} ${event.time}`);
+    
     return event;
 }
-
 //display the details of a clicked event
-function toggleEventDetail(eventItem, event, days, hours){
-
-    //convert to date to be more readable
+function toggleEventDetail(eventItem, event, days, hours) {
+    // Convert to date to be more readable
     const eventDate = new Date(event.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
-    
-    //convert time to be more readable
+
+    // Convert time to be more readable
     const eventTime = convertTo12HourFormat(event.time);
+    console.log(`Event details: ${eventDate} ${eventTime}`);
 
     // Escape JSON string to avoid breaking HTML
     const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
@@ -378,6 +508,7 @@ function toggleEventDetail(eventItem, event, days, hours){
                 <div class="eventDetail">${eventDate}</div>
                 <div class="eventDetail">${eventTime}</div>
                 <div class="eventDetail">${event.description}</div>
+                <div class="eventDetail">repeats: ${event.repeat}</div>
                 <div class="eventOptions">
                     <button class="eventEdit" onclick="eventEdit()">Edit</button>
                     <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
@@ -414,14 +545,30 @@ function darkenColor(color, percent) {
 //clear all events from local storage
 function clearEvents() {
     // Display a confirmation dialog
-    const userConfirmed = confirm("Are you sure you want to clear all events?\nThis will permanently delete them");
-    
-    // If the user clicks "OK" (Yes), proceed with clearing the events
-    if (userConfirmed) {
-        localStorage.removeItem('events');
-        displayStoredEvents();
-    }
-    // If the user clicks "Cancel" (No), do nothing
+    const confirmationDialog = document.getElementById('confirmationContainer');
+    const clearEventsButton = document.getElementById('clearEventsButton');
+    clearEventsButton.innerHTML = '<h3>Are You Sure?</h3><p>this will permanently delete all events</p>';
+    confirmationDialog.style.display = 'flex';
+    setTimeout(() => {
+        confirmationDialog.style.height = '50px';
+    }, 50)
+}
+
+function clearAllEvents(){
+    localStorage.clear();
+    displayStoredEvents();
+    hideConfirmationDialog();
+}
+
+hideConfirmationDialog = () => {
+    const confirmationDialog = document.getElementById('confirmationContainer');
+    const clearEventsButton = document.getElementById('clearEventsButton');
+    confirmationDialog.style.height = '0';
+    setTimeout(() => {
+        confirmationDialog.style.display = 'none';
+    }, 300);
+    clearEventsButton.innerHTML = 'Clear All Events';
+
 }
 
 //function to edit an event
@@ -437,7 +584,7 @@ function eventDelete(event){
     if (userConfirmed) {
         const events = JSON.parse(localStorage.getItem('events')) || [];
         for (let i = 0; i < events.length; i++) {
-            if (events[i].title == event.title && events[i].date == event.date && events[i].time == event.time) {
+            if (events[i].title == event.title) {
                 events.splice(i, 1);
                 break;
             }
@@ -446,6 +593,8 @@ function eventDelete(event){
         const eventsJSON = JSON.stringify(events);
         // Store the updated JSON string in localStorage
         localStorage.setItem('events', eventsJSON);
+        displayStoredEvents();
+
     }
 }
 

@@ -25,8 +25,10 @@
             <div class="eventCreationMenu">
                 <button id="eventCreation" onclick="eventCreationMenu()">+ Event Creator</button>
                 <input type="text" class="eventCreationField" id="eventTitle" placeholder="Event Title">
-                <input type="date" class="eventCreationField" id="eventDate">
-                <input type="time" class="eventCreationField" id="eventTime">
+                <div class="date-time">
+                    <input type="date" class="eventCreationField" id="eventDate">
+                    <input type="time" class="eventCreationField" id="eventTime">
+                </div>
                 <textarea id="eventDescription" class="eventCreationField" placeholder="Event Description"></textarea>
                 <input type="color" id="eventColour" value="#89cff0" ></input>
                 <div id="repeat">
@@ -46,6 +48,10 @@
                 <div id="eventListItems">
                     <!--Event elements added here by JavaScript-->
                 </div>
+            </div>
+            <div id="confirmationContainer">
+                <button id="yesButton" onclick="clearAllEvents()">Delete</button>
+                <button id="noButton" onclick="hideConfirmationDialog()">Cancel</button>
             </div>
             <button id="clearEventsButton" onclick="clearEvents()">Clear All Events</button>
         </div>

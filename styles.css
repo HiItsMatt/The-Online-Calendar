@@ -355,7 +355,6 @@ th {
 }
 
 th, td {
-    flex: 1;
     background: rgba(255, 255, 255, 0.4);
     color: black; /* 100% / 7 columns */
     height: 100px; /* Fixed height for each cell */
@@ -363,12 +362,7 @@ th, td {
     text-align: left;
     border: 1px solid black; /* Optional: Add border for better visibility */
     box-sizing: border-box; /* Ensure padding and border are included in the width and height */
-}
-
-td:hover{
-    transition: all 0.3s;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.7)
+    transition: background 0.3s ease !important;
 }
 
 #leftSidebar {
@@ -449,6 +443,7 @@ td:hover{
 #sidebarContent{
     height: calc(100vh - 100px);
     width: calc(400px - 50px);
+    overflow: hidden;
 }
 
 #eventCreation{
@@ -498,6 +493,19 @@ td:hover{
     font-size: 20px;
     transition: all 0.3;
     border-radius: 10px;
+}
+
+.eventCreationField#eventDate{
+    display: block;
+    margin: 0px;
+    width: 90%;
+    margin-right: 10px;
+}
+
+.eventCreationField#eventTime{
+    display: block;
+    margin: 0px;
+    width: 90%;
 }
 
 /* Hide the default checkbox */
@@ -756,4 +764,121 @@ button.eventItem:hover{
 .eventEdit:hover {
     background-color: #87ff8b;
     box-shadow: 0 0 20px rgba(0, 255, 0, 1); /* Add glowing effect */
+}
+
+#confirmationContainer {
+    bottom: 100px;
+    display: none;
+    position: fixed;
+    width: calc(350px);
+    height: 0px;
+    transition: height 0.3s ease;
+}
+
+#yesButton{
+    flex: 1;
+    background-color: rgb(100, 0, 0);
+    border: rgb(255, 0, 0) 2px solid;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+#clearEventsButton:hover{
+    background-color: rgb(255, 100, 100);
+    border: rgb(255, 255, 255) 2px solid;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
+}
+
+#noButton{
+    flex: 1;
+    background-color: #067700; /* Red */
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#yesButton:hover{
+    background-color: rgb(255, 100, 100);
+    border: rgb(255, 255, 255) 2px solid;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
+}
+
+#noButton:hover{
+    background-color: #71ff6a;
+    border: rgb(255, 255, 255) 2px solid;
+    box-shadow: 0 0 20px #0dff00; /* Add glowing effect */
+}
+
+#clearEventsButton p{
+    font-size: 15px;
+    padding: 0px;
+    transform: translateY(-30px)
+}
+
+#clearEventsButton h3{
+    font-size: 30px;
+    padding: 0px;
+
+}
+
+.date-time{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px;
+}
+
+.calendar-cell {
+    position: relative;
+    flex: 1 1 auto; /* Allow cells to grow and shrink */
+    padding: 10px;
+    transition: transform 0.3s;
+}
+
+.calendar-cell.clicked {
+    position:fixed !important;
+    backdrop-filter: blur(10px);
+    z-index: 10; /* Ensure the clicked cell appears above others */
+}
+
+.eventContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left:0;
+    right:0;
+    top:0px;
+    bottom:0;
+    overflow:hidden;
+    transition: all 0.3s ease;
+}
+
+.calendarEvent{
+    display: block;
+    flex: 1;
+    height: fit-content;
+    margin: 5px;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden; /* Ensure content doesn't overflow */
+    transition: all 0.3s ease;
+}
+
+.calendarEvent.enlarged{
+    font-size: 25px;
+    font-weight: 700;
+    padding: 10px;
+}
+
+.calendarEventDetails{
+    display: none;
+    font-weight: 100;
+    font-size: 15px;
+
 }
