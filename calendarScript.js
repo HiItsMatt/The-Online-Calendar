@@ -1,4 +1,7 @@
 function onLoad() {
+
+    clearCalendar();
+
     const calendarTable = document.getElementById('calendarTable').getElementsByTagName('tbody')[0];
     const monthYearHeader = document.getElementById('monthYear');
 
@@ -176,6 +179,14 @@ function onLoad() {
 function getMonth(month) {
     var monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return monthArray[month];
+}
+
+// Function to clear previous calendar cells
+function clearCalendar() {
+    const calendarBody = document.getElementById('calendarTable').getElementsByTagName('tbody')[0];
+    while (calendarBody.firstChild) {
+        calendarBody.removeChild(calendarBody.firstChild);
+    }
 }
 
 //find if the current year is a leap year
@@ -380,8 +391,7 @@ function createNewEvent() {
 
     // Store the updated JSON string in localStorage
     localStorage.setItem('events', eventsJSON);
-
-    displayStoredEvents();
+    onload();
 }
 
 function displayStoredEvents() {
@@ -451,11 +461,11 @@ function getClosestRepeatEvent(event, now) {
     console.log(`Parsed eventDate (UTC): ${eventDate.toISOString()}`);
     
     while (eventDate <= now) {
-        if (event.repeatFrequency === "weekly") {
+        if (event.repeat == "weekly") {
             eventDate.setUTCDate(eventDate.getUTCDate() + 7);
-        } else if (event.repeatFrequency === "monthly") {
+        } else if (event.repeat == "monthly") {
             eventDate.setUTCMonth(eventDate.getUTCMonth() + 1);
-        } else if (event.repeatFrequency === "yearly") {
+        } else if (event.repeat == "yearly") {
             eventDate.setUTCFullYear(eventDate.getUTCFullYear() + 1);
         } else {
             // If no valid repeat frequency is found, break the loop to avoid infinite loop
@@ -556,7 +566,7 @@ function clearEvents() {
 
 function clearAllEvents(){
     localStorage.clear();
-    displayStoredEvents();
+    onload();
     hideConfirmationDialog();
 }
 
@@ -589,11 +599,10 @@ function eventDelete(event){
                 break;
             }
         }
-        displayStoredEvents();
         const eventsJSON = JSON.stringify(events);
         // Store the updated JSON string in localStorage
         localStorage.setItem('events', eventsJSON);
-        displayStoredEvents();
+        onload();
 
     }
 }
