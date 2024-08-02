@@ -26,6 +26,14 @@ function onLoad() {
 
     let weeksNeeded = Math.ceil((firstDay + daysInMonth) / 7);
 
+    document.getElementById('nextMonth').addEventListener('click', () => {
+        loadNextMonth(currentMonth, currentYear);
+    })
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+        loadPrevMonth(currentMonth, currentYear);
+    })
+
     for (let i = 0; i < weeksNeeded; i++) { // 6 weeks to cover all possible days in a month
         const row = document.createElement('tr');
         row.style.height= '';
@@ -45,6 +53,416 @@ function onLoad() {
                 cell.style.border = '1px solid black';
             }
             else if (j > daysInMonth) {
+
+                // Empty cells after the last day of the month
+                cell.textContent = '';
+                cell.style.border = '1px solid transparent';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+            }
+            else {
+                cell.classList.add('calendar-cell');
+
+                //create an event container to go inside cell
+                const eventContainer = document.createElement('div');
+                eventContainer.classList.add('eventContainer');
+                eventContainer.innerHTML = `<div class="date">${date}</div>`;
+
+                //check if an event is on this date
+                for(let i = 0; i < events.length; i++){
+                    let event = events[i];
+                    let eventDate = new Date(event.date);
+
+                    //check if an event is on this date
+                    if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
+                        let calendarEvent = document.createElement('div');
+                        
+                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                        calendarEvent.style.borderWidth = "2px";
+                        calendarEvent.style.borderStyle = "solid";
+                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                        calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                        calendarEvent.classList.add('calendarEvent');
+
+                        eventContainer.appendChild(calendarEvent);
+                        
+                    }
+                    //check if an event is repeating on this date
+                    else if(event.repeat != "none"){
+
+                        //check if the event is repeating weekly and if it is on the current day of the week
+                        if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
+                            let calendarEvent = document.createElement('div');
+
+                            calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                            calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                            calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                            calendarEvent.classList.add('calendarEvent');
+
+                            eventContainer.appendChild(calendarEvent);
+                        }
+                        let checkingDate = new Date(currentYear, currentMonth, eventDate.getDate());
+                        while(checkingDate.getDate() < date){
+                            if(event.repeat == "monthly"){
+                                checkingDate.setMonth(checkingDate.getMonth() + 1);
+                            }
+                            else if(event.repeat == "yearly"){
+                                checkingDate.setFullYear(checkingDate.getFullYear() + 1);
+                            }
+                            else{
+                                break;
+                            }
+                            if(checkingDate.getDate() == date && checkingDate.getMonth() == currentMonth && checkingDate.getFullYear() == currentYear){
+                                let calendarEvent = document.createElement('div');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                        }
+                    }
+                }
+                cell.appendChild(eventContainer);
+                cell.style.transition = "all 0.3s !important";
+                cell.addEventListener('click', () => {
+                    if(cell.classList.contains('clicked')){
+                        cell.classList.remove('clicked');
+                        cell.style.position = '';
+                        cell.style.left = '';
+                        cell.style.top = '';
+                        cell.style.width = '';
+                        cell.style.height = '';
+
+                        const elements = cell.querySelectorAll(`.${"calendarEvent"}`);
+                        elements.forEach(element => {
+                            element.classList.remove("enlarged");
+
+                            elements.forEach(element => {
+                                element.classList.remove('enlarged');
+    
+                                const details = element.querySelector('.calendarEventDetails');
+                                if (details) {
+                                    details.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                    else{
+                        cell.classList.add('clicked');
+                        cell.style.position = "fixed"; 
+
+                        const rect = cell.getBoundingClientRect();
+                        const newLeft = rect.left + (0.5 * rect.width) - 100;
+                        const newTop = rect.top + (0.5 * rect.height) - 175;
+                        const newWidth = 400;
+                        const newHeight = 400;
+                        
+                        const elements = cell.querySelectorAll('.calendarEvent');
+                        elements.forEach(element => {
+                            element.classList.add('enlarged');
+
+                            const details = element.querySelector('.calendarEventDetails');
+                            if (details) {
+                                details.style.display = 'block';
+                            }
+                        });
+
+                        cell.style.width = `${newWidth}px`;
+                        cell.style.height = `${newHeight}px`;
+                        cell.style.left = `${newLeft}px`;
+                        cell.style.top = `${newTop}px`;                                                            
+                    }
+                });
+                
+                cell.addEventListener('mouseover', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.7)";
+                });
+                cell.addEventListener('mouseout', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.4)";
+                });
+                
+                // Highlight the current date
+                if (date === currentDate && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    cell.classList.add('current-date');
+                }
+                date++;
+            }
+            row.appendChild(cell);
+        }
+
+        calendarTable.appendChild(row);
+    }
+
+    displayStoredEvents();
+}
+
+function loadNextMonth(prevMonth, prevYear) {
+
+    clearCalendar();
+
+    const calendarTable = document.getElementById('calendarTable').getElementsByTagName('tbody')[0];
+    const monthYearHeader = document.getElementById('monthYear');
+
+    if (prevMonth == 11) {
+        currentMonth = 0;
+        currentYear = prevYear + 1;
+    } else {
+        currentMonth = prevMonth + 1;
+        currentYear = prevYear;
+    }
+    const today = new Date();
+    const currentDate = today.getDate();
+
+    document.getElementById('nextMonth').addEventListener('click', () => {
+        loadNextMonth(currentMonth, currentYear);
+    })
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+        loadPrevMonth(currentMonth, currentYear);
+    })
+
+    // Set the month and year header
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthYearHeader.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+    // Get the first day of the month and the number of days in the month
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // Generate the calendar rows and cells
+    let date = 1;
+
+    //get the events from local storage
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+
+    let weeksNeeded = Math.ceil((firstDay + daysInMonth) / 7);
+
+    for (let i = 0; i < weeksNeeded; i++) { // 6 weeks to cover all possible days in a month
+        const row = document.createElement('tr');
+        row.style.height= '';
+
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+            
+            const DateObj = new Date(currentYear, currentMonth, date);
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dayOfWeek = daysOfWeek[DateObj.getDay()];
+
+            if (i === 0 && j < firstDay) {
+
+                // Empty cells before the first day of the month
+                cell.textContent = '';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                cell.style.border = '1px solid black';
+            }
+            else if (date > daysInMonth) {
+
+                // Empty cells after the last day of the month
+                cell.textContent = '';
+                cell.style.border = '1px solid transparent';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+            }
+            else {
+                cell.classList.add('calendar-cell');
+
+                //create an event container to go inside cell
+                const eventContainer = document.createElement('div');
+                eventContainer.classList.add('eventContainer');
+                eventContainer.innerHTML = `<div class="date">${date}</div>`;
+
+                //check if an event is on this date
+                for(let i = 0; i < events.length; i++){
+                    let event = events[i];
+                    let eventDate = new Date(event.date);
+
+                    //check if an event is on this date
+                    if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
+                        let calendarEvent = document.createElement('div');
+                        
+                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                        calendarEvent.style.borderWidth = "2px";
+                        calendarEvent.style.borderStyle = "solid";
+                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                        calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                        calendarEvent.classList.add('calendarEvent');
+
+                        eventContainer.appendChild(calendarEvent);
+                        
+                    }
+                    //check if an event is repeating on this date
+                    else if(event.repeat != "none"){
+
+                        //check if the event is repeating weekly and if it is on the current day of the week
+                        if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
+                            let calendarEvent = document.createElement('div');
+
+                            calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                            calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                            calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                            calendarEvent.classList.add('calendarEvent');
+
+                            eventContainer.appendChild(calendarEvent);
+                        }
+                        let checkingDate = new Date(currentYear, currentMonth, eventDate.getDate());
+                        while(checkingDate.getDate() < date){
+                            if(event.repeat == "monthly"){
+                                checkingDate.setMonth(checkingDate.getMonth() + 1);
+                            }
+                            else if(event.repeat == "yearly"){
+                                checkingDate.setFullYear(checkingDate.getFullYear() + 1);
+                            }
+                            else{
+                                break;
+                            }
+                            if(checkingDate.getDate() == date && checkingDate.getMonth() == currentMonth && checkingDate.getFullYear() == currentYear){
+                                let calendarEvent = document.createElement('div');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                        }
+                    }
+                }
+                cell.appendChild(eventContainer);
+                cell.style.transition = "all 0.3s !important";
+                cell.addEventListener('click', () => {
+                    if(cell.classList.contains('clicked')){
+                        cell.classList.remove('clicked');
+                        cell.style.position = '';
+                        cell.style.left = '';
+                        cell.style.top = '';
+                        cell.style.width = '';
+                        cell.style.height = '';
+
+                        const elements = cell.querySelectorAll(`.${"calendarEvent"}`);
+                        elements.forEach(element => {
+                            element.classList.remove("enlarged");
+
+                            elements.forEach(element => {
+                                element.classList.remove('enlarged');
+    
+                                const details = element.querySelector('.calendarEventDetails');
+                                if (details) {
+                                    details.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                    else{
+                        cell.classList.add('clicked');
+                        cell.style.position = "fixed"; 
+
+                        const rect = cell.getBoundingClientRect();
+                        const newLeft = rect.left + (0.5 * rect.width) - 100;
+                        const newTop = rect.top + (0.5 * rect.height) - 175;
+                        const newWidth = 400;
+                        const newHeight = 400;
+                        
+                        const elements = cell.querySelectorAll('.calendarEvent');
+                        elements.forEach(element => {
+                            element.classList.add('enlarged');
+
+                            const details = element.querySelector('.calendarEventDetails');
+                            if (details) {
+                                details.style.display = 'block';
+                            }
+                        });
+
+                        cell.style.width = `${newWidth}px`;
+                        cell.style.height = `${newHeight}px`;
+                        cell.style.left = `${newLeft}px`;
+                        cell.style.top = `${newTop}px`;                                                            
+                    }
+                });
+                
+                cell.addEventListener('mouseover', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.7)";
+                });
+                cell.addEventListener('mouseout', () => {
+                    cell.style.backgroundColor = "rgba(255,255,255, 0.4)";
+                });
+                
+                // Highlight the current date
+                if (date === currentDate && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    cell.classList.add('current-date');
+                }
+                date++;
+            }
+            row.appendChild(cell);
+        }
+
+        calendarTable.appendChild(row);
+    }
+
+    displayStoredEvents();
+}
+
+function loadPrevMonth(prevMonth, prevYear) {
+
+    clearCalendar();
+
+    const calendarTable = document.getElementById('calendarTable').getElementsByTagName('tbody')[0];
+    const monthYearHeader = document.getElementById('monthYear');
+
+    if (prevMonth == 0) {
+        currentMonth = 11;
+        currentYear = prevYear - 1;
+    } else {
+        currentMonth = prevMonth - 1;
+        currentYear = prevYear;
+    }
+    const today = new Date();
+    const currentDate = today.getDate();
+
+    document.getElementById('nextMonth').addEventListener('click', () => {
+        loadNextMonth(currentMonth, currentYear);
+    })
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+        loadPrevMonth(currentMonth, currentYear);
+    })
+
+    // Set the month and year header
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthYearHeader.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+    // Get the first day of the month and the number of days in the month
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // Generate the calendar rows and cells
+    let date = 1;
+
+    //get the events from local storage
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+
+    let weeksNeeded = Math.ceil((firstDay + daysInMonth) / 7);
+
+    for (let i = 0; i < weeksNeeded; i++) { // 6 weeks to cover all possible days in a month
+        const row = document.createElement('tr');
+        row.style.height= '';
+
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+            
+            const DateObj = new Date(currentYear, currentMonth, date);
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dayOfWeek = daysOfWeek[DateObj.getDay()];
+
+            if (i === 0 && j < firstDay) {
+
+                // Empty cells before the first day of the month
+                cell.textContent = '';
+                cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+                cell.style.border = '1px solid black';
+            }
+            else if (date > daysInMonth) {
 
                 // Empty cells after the last day of the month
                 cell.textContent = '';

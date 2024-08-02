@@ -298,9 +298,9 @@ label {
 }
 
 #calendarHeader {
+    display: flex;
     height: 100px;
     width: calc(100vw - 400px);
-    display: block;
     background: rgba(255, 255, 255, 1);
     border: black 2px solid;
     clear: both;
