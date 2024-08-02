@@ -27,8 +27,35 @@
                 <input type="text" class="eventCreationField" id="eventTitle" placeholder="Event Title">
                 <div class="date-time">
                     <input type="date" class="eventCreationField" id="eventDate">
-                    <input type="time" class="eventCreationField" id="eventTime">
                 </div>
+                <div class="date-time">
+                    <select class="eventCreationField" id="eventHour">
+                        <!-- Populate hours from 01 to 12 -->
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <select class="eventCreationField" id="eventMinute">
+                        <!-- Populate minutes with 15-minute intervals -->
+                        <option value="00">00</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                    </select>
+                    <select class="eventCreationField" id="eventPeriod">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div> 
                 <textarea id="eventDescription" class="eventCreationField" placeholder="Event Description"></textarea>
                 <input type="color" id="eventColour" value="#89cff0" ></input>
                 <div id="repeat">
@@ -79,7 +106,10 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>         
+            </div>
+            <div class="eventEditor">
+                
+            </div>     
         </main>
     </div>
     <script src="calendarScript.js"></script>

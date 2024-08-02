@@ -498,14 +498,7 @@ th, td {
 .eventCreationField#eventDate{
     display: block;
     margin: 0px;
-    width: 90%;
-    margin-right: 10px;
-}
-
-.eventCreationField#eventTime{
-    display: block;
-    margin: 0px;
-    width: 90%;
+    width: 100%;
 }
 
 /* Hide the default checkbox */

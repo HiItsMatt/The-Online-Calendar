@@ -304,7 +304,9 @@ function showEventCreationMenu(){
     eventMenu.classList.add("open");
     document.getElementById("eventTitle").style.display = "block";
     document.getElementById("eventDate").style.display = "block";
-    document.getElementById("eventTime").style.display = "block";
+    document.getElementById("eventHour").style.display = "block";
+    document.getElementById("eventMinute").style.display = "block";
+    document.getElementById("eventPeriod").style.display = "block";
     document.getElementById("eventDescription").style.display = "block";
     document.getElementById("eventColour").style.display = "block";
     document.getElementById("makeNewEvent").style.display = "block";
@@ -320,7 +322,9 @@ function hideEventCreationMenu(){
     setTimeout(() => {
         document.getElementById("eventTitle").style.display = "none";
         document.getElementById("eventDate").style.display = "none";
-        document.getElementById("eventTime").style.display = "none";
+        document.getElementById("eventHour").style.display = "none";
+        document.getElementById("eventMinute").style.display = "none";
+        document.getElementById("eventPeriod").style.display = "none";
         document.getElementById("eventDescription").style.display = "none";
         document.getElementById("eventColour").style.display = "none";
         document.getElementById("makeNewEvent").style.display = "none";
@@ -332,7 +336,7 @@ function createNewEvent() {
     // Get the values of the input fields
     const eventTitle = document.getElementById('eventTitle').value;
     const eventDate = document.getElementById('eventDate').value;
-    const eventTime = document.getElementById('eventTime').value;
+    const eventTime = getSelectedTime();
     const eventDescription = document.getElementById('eventDescription').value;
     const eventColour = document.getElementById('eventColour').value;
     const repeatEvent = document.getElementById('repeatEvent');
@@ -614,5 +618,17 @@ function displayRepeatOptions() {
         select.style.display = 'block';
     } else {
         select.style.display = 'none';
+    }
+}
+
+function getSelectedTime() {
+    const hour = document.getElementById('eventHour').value;
+    const minute = document.getElementById('eventMinute').value;
+    const period = document.getElementById('eventPeriod').value;
+    if(period == "AM"){
+        return `${hour}:${minute}`;
+    }
+    else{
+        return `${parseInt(hour) + 12}:${minute}`;
     }
 }
