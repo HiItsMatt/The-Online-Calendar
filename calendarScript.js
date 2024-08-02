@@ -79,7 +79,7 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                 // Empty cells before the first day of the month
                 cell.textContent = '';
                 cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-                cell.style.border = '1px solid black';
+                cell.style.border = '1px solid transparent';
             }
             else if (date > daysInMonth) {
 

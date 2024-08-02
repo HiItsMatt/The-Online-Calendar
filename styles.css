@@ -304,8 +304,8 @@ label {
     background: rgba(255, 255, 255, 1);
     border: black 2px solid;
     clear: both;
-    text-align: center;
     transition: all 0.3s;
+    justify-content: space-between;
 }
 
 #calendarHeader h1 {
