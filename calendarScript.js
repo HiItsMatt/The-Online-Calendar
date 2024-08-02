@@ -63,6 +63,8 @@ function onLoad() {
                 for(let i = 0; i < events.length; i++){
                     let event = events[i];
                     let eventDate = new Date(event.date);
+
+                    //check if an event is on this date
                     if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
                         let calendarEvent = document.createElement('div');
                         
@@ -77,7 +79,7 @@ function onLoad() {
                         
                     }
                     //check if an event is repeating on this date
-                    if(event.repeatFrequency != "none"){
+                    else if(event.repeat != "none"){
 
                         //check if the event is repeating weekly and if it is on the current day of the week
                         if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
@@ -368,6 +370,10 @@ function createNewEvent() {
         repeatValue = "none";
     }
 
+    const eventDateTime = new Date(`${eventDate}T${eventTime}:00.000Z`);
+    const eventDateUTC = eventDateTime.toISOString().split('T')[0]; // Date in UTC
+    const eventTimeUTC = eventDateTime.toISOString().split('T')[1].substring(0, 5); // Time in UTC
+
     const eventDateObj = new Date(eventDate);
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const dayOfWeek = daysOfWeek[eventDateObj.getDay()];
@@ -375,8 +381,8 @@ function createNewEvent() {
     // Create an event object
     const event = {
         title: eventTitle,
-        date: eventDate,
-        time: eventTime,
+        date: eventDateUTC,
+        time: eventTimeUTC,
         description: eventDescription,
         colour: eventColour,
         repeat: repeatValue,
@@ -395,7 +401,6 @@ function createNewEvent() {
     }
 
     // Find the correct position to insert the new event
-    const eventDateTime = new Date(`${event.date}T${event.time}`);
     let insertIndex = events.length;
     for (let i = 0; i < events.length; i++) {
         const currentEventDateTime = new Date(`${events[i].date}T${events[i].time}`);
