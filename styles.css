@@ -443,7 +443,7 @@ th, td {
 #sidebarContent{
     height: calc(100vh - 100px);
     width: calc(400px - 50px);
-    overflow: hidden;
+    overflow-y: scroll;
 }
 
 #eventCreation{
