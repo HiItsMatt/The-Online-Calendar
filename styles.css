@@ -694,7 +694,7 @@ button.eventItem:hover{
 #clearEventsButton:hover{
     background-color: rgb(255, 100, 100);
     border: rgb(255, 255, 255) 2px solid;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
+    box-shadow: 0 0 20px rgba(255, 0, 0, 1);
 }
 
 .noEventsBox{
@@ -777,11 +777,6 @@ button.eventItem:hover{
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
-}
-#clearEventsButton:hover{
-    background-color: rgb(255, 100, 100);
-    border: rgb(255, 255, 255) 2px solid;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 1); /* Add glowing effect */
 }
 
 #noButton{

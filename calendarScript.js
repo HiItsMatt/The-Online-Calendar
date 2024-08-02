@@ -419,12 +419,7 @@ function createNewEvent() {
 function displayStoredEvents() {
     let events = JSON.parse(localStorage.getItem('events')) || [];
     const now = new Date();
-
-    // Filter events to include only future events or events with repeat frequency
-    events = events.filter(event => {
-        const eventDate = new Date(`${event.date}T${event.time}`);
-        return eventDate > now || event.repeatFrequency !== "none";
-    });
+    const nowUTC = new Date(now.toISOString()); // Convert to UTC
 
     const eventListItems = document.getElementById('eventListItems');
     eventListItems.innerHTML = ''; // Clear existing events
@@ -441,7 +436,7 @@ function displayStoredEvents() {
     // Update events to their next occurrence if they have a repeat frequency
     for(let i = 0 ; i < events.length; i++){
         if(events[i].repeatFrequency !== "none"){
-            events[i] = getClosestRepeatEvent(events[i], now);
+            events[i] = getClosestRepeatEvent(events[i], nowUTC);
         }
     }
 
@@ -452,25 +447,39 @@ function displayStoredEvents() {
         let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        const eventItem = document.createElement('button');
-        eventItem.className = 'eventItem';
-        if (days === 0) {
-            eventItem.innerHTML = `
-                <div class="eventTitle">${event.title}</div>
-                <div class="eventTime"> in ${hours} hours</div>
-            `;
-        } else {
-            eventItem.innerHTML = `
-                <div class="eventTitle">${event.title}</div>
-                <div class="eventTime">${days} days and ${hours} hours</div>
-            `;
+        if(event.repeat =="weekly"){
+            if (days < 0 || (days === 0 && hours < 0)) {
+                if(days < 0){
+                    days =+ 7;
+                }
+                if(hours < 0){
+                    days -= 1;
+                    hours += 24;
+                }
+            }
         }
-        eventItem.style.backgroundColor = event.colour;
-        eventItem.style.borderColor = darkenColor(event.colour, 40); // Set border color slightly darker
-        eventListItems.appendChild(eventItem);
-        eventItem.onclick = function () {
-            toggleEventDetail(eventItem, event, days, hours);
-        };
+
+        if(days > 0 || hours > 0){
+            const eventItem = document.createElement('button');
+            eventItem.className = 'eventItem';
+            if (days === 0) {
+                eventItem.innerHTML = `
+                    <div class="eventTitle">${event.title}</div>
+                    <div class="eventTime"> in ${hours} hours</div>
+                `;
+            } else {
+                eventItem.innerHTML = `
+                    <div class="eventTitle">${event.title}</div>
+                    <div class="eventTime">${days} days and ${hours} hours</div>
+                `;
+            }
+            eventItem.style.backgroundColor = event.colour;
+            eventItem.style.borderColor = darkenColor(event.colour, 40); // Set border color slightly darker
+            eventListItems.appendChild(eventItem);
+            eventItem.onclick = function () {
+                toggleEventDetail(eventItem, event, days, hours);
+            };
+        }
     });
 }
 
@@ -481,7 +490,7 @@ function getClosestRepeatEvent(event, now) {
     // Parse the event date and time as UTC
     let eventDate = new Date(`${event.date}T${event.time}:00.000Z`);
     console.log(`Parsed eventDate (UTC): ${eventDate.toISOString()}`);
-    
+
     while (eventDate <= now) {
         if (event.repeat == "weekly") {
             eventDate.setUTCDate(eventDate.getUTCDate() + 7);
@@ -495,7 +504,7 @@ function getClosestRepeatEvent(event, now) {
         }
         console.log(`Updated eventDate (UTC): ${eventDate.toISOString()}`);
     }
-    
+
     // Convert back to local time for display
     event.date = eventDate.toISOString().split('T')[0];
     event.time = eventDate.toISOString().split('T')[1].substring(0, 5);
@@ -503,6 +512,7 @@ function getClosestRepeatEvent(event, now) {
     
     return event;
 }
+
 //display the details of a clicked event
 function toggleEventDetail(eventItem, event, days, hours) {
     // Convert to date to be more readable
