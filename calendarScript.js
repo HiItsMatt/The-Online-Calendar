@@ -33,6 +33,10 @@ function onLoad() {
         for (let j = 0; j < 7; j++) {
             const cell = document.createElement('td');
             
+            const DateObj = new Date(currentYear, currentMonth, date);
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dayOfWeek = daysOfWeek[DateObj.getDay()];
+
             if (i === 0 && j < firstDay) {
 
                 // Empty cells before the first day of the month
@@ -40,7 +44,7 @@ function onLoad() {
                 cell.style.backgroundColor = 'rgba(0, 0, 0, 0)';
                 cell.style.border = '1px solid black';
             }
-            else if (date > daysInMonth) {
+            else if (j > daysInMonth) {
 
                 // Empty cells after the last day of the month
                 cell.textContent = '';
@@ -74,12 +78,21 @@ function onLoad() {
                     }
                     //check if an event is repeating on this date
                     if(event.repeatFrequency != "none"){
+
+                        //check if the event is repeating weekly and if it is on the current day of the week
+                        if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
+                            let calendarEvent = document.createElement('div');
+
+                            calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                            calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                            calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                            calendarEvent.classList.add('calendarEvent');
+
+                            eventContainer.appendChild(calendarEvent);
+                        }
                         let checkingDate = new Date(currentYear, currentMonth, eventDate.getDate());
                         while(checkingDate.getDate() < date){
-                            if(event.repeat == "weekly"){
-                                checkingDate.setDate(checkingDate.getDate() + 7);
-                            }
-                            else if(event.repeat == "monthly"){
+                            if(event.repeat == "monthly"){
                                 checkingDate.setMonth(checkingDate.getMonth() + 1);
                             }
                             else if(event.repeat == "yearly"){
@@ -355,6 +368,10 @@ function createNewEvent() {
         repeatValue = "none";
     }
 
+    const eventDateObj = new Date(eventDate);
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayOfWeek = daysOfWeek[eventDateObj.getDay()];
+
     // Create an event object
     const event = {
         title: eventTitle,
@@ -362,7 +379,8 @@ function createNewEvent() {
         time: eventTime,
         description: eventDescription,
         colour: eventColour,
-        repeat: repeatValue
+        repeat: repeatValue,
+        dayOfWeek: dayOfWeek
     };
 
     // Get the JSON string of events from localStorage
