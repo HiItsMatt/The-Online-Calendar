@@ -1,3 +1,5 @@
+let sideBarOpen = true;
+
 function onLoad() {
 
     const today = new Date();
@@ -197,9 +199,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         if (newLeft + newWidth > window.innerWidth) {
                             cell.style.left = `${window.innerWidth - newWidth}px`;
                         }
-                        else if(newLeft  < 50){
-                            cell.style.left = "50px";
+                        else if(sideBarOpen && newLeft  < 400){
+                            cell.style.left = "400px";
                         } 
+                        else if(!sideBarOpen && newLeft < 50){
+                            cell.style.left = "50px";
+                        }
                         else {
                             cell.style.left = `${newLeft}px`;
                         }
@@ -329,6 +334,7 @@ function minimiseSidebar(){
     document.getElementById("maximiseButton").style.display = "block";
     document.getElementById("minimiseButton").style.display = "none";
     document.getElementById("sidebarContent").style.display = "none";
+    sideBarOpen = false;
 }
 
 //show sidebar
@@ -342,6 +348,7 @@ function maximiseSidebar(){
     document.getElementById("maximiseButton").style.display = "none";
     document.getElementById("minimiseButton").style.display = "block";
     document.getElementById("sidebarContent").style.display = "block";
+    sideBarOpen = true;
 }
 
 //logic for showing and hiding the event creation menu
