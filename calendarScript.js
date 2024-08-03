@@ -208,6 +208,13 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         else {
                             cell.style.left = `${newLeft}px`;
                         }
+                        if(newTop + newHeight > window.innerHeight){
+                            cell.style.top = `${window.innerHeight - newHeight}px`;
+                        }
+                        if(newTop < 0){
+                            cell.style.top = "50px";
+                        }
+                        
 
                         cell.style.width = `${newWidth}px`;
                         cell.style.height = `${newHeight}px`;
