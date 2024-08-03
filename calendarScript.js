@@ -180,11 +180,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         cell.classList.add('clicked');
                         cell.style.position = "fixed"; 
 
-                        const rect = cell.getBoundingClientRect();
-                        const newLeft = rect.left + (0.5 * rect.width) - 100;
-                        const newTop = rect.top + (0.5 * rect.height) - 175;
                         const newWidth = 400;
                         const newHeight = 400;
+                        const rect = cell.getBoundingClientRect();
+                        const newLeft = rect.left + (0.5 * rect.width) - (0.25 * newWidth);
+                        const newTop = rect.top + (0.5 * rect.height) - (0.47 * newHeight);
+                        
                         
                         const elements = cell.querySelectorAll('.calendarEvent');
                         elements.forEach(element => {
@@ -211,7 +212,7 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         if(newTop + newHeight > window.innerHeight){
                             cell.style.top = `${window.innerHeight - newHeight}px`;
                         }
-                        if(newTop < 0){
+                        else if(newTop < 0){
                             cell.style.top = "50px";
                         }
                         
