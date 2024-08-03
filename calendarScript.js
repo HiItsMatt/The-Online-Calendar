@@ -177,14 +177,14 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         });
                     }
                     else{
+                        const rect = cell.getBoundingClientRect();
+
                         cell.classList.add('clicked');
                         cell.style.position = "fixed"; 
-
                         const newWidth = 400;
                         const newHeight = 400;
-                        const rect = cell.getBoundingClientRect();
-                        const newLeft = rect.left + (0.5 * rect.width) - (0.25 * newWidth);
-                        const newTop = rect.top + (0.5 * rect.height) - (0.47 * newHeight);
+                        const newLeft = rect.left + (0.5 * rect.width) - (0.5 * newWidth);
+                        const newTop = rect.top + (0.5 * rect.height) - (0.5 * newHeight);
                         
                         
                         const elements = cell.querySelectorAll('.calendarEvent');
@@ -197,6 +197,7 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                             }
                         });
 
+                        //if cells position is outside of window horizontally, move it to the edge
                         if (newLeft + newWidth > window.innerWidth) {
                             cell.style.left = `${window.innerWidth - newWidth}px`;
                         }
@@ -209,18 +210,21 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         else {
                             cell.style.left = `${newLeft}px`;
                         }
+
+                        //if cell's new position is outside of window vertically, move it to the edge
                         if(newTop + newHeight > window.innerHeight){
                             cell.style.top = `${window.innerHeight - newHeight}px`;
                         }
                         else if(newTop < 0){
-                            cell.style.top = "50px";
+                            cell.style.top = window.innerHeight;
+                        }
+                        else{
+                            cell.style.top = `${newTop}px`;
                         }
                         
-
+                        
                         cell.style.width = `${newWidth}px`;
-                        cell.style.height = `${newHeight}px`;
-
-                        cell.style.top = `${newTop}px`;                                                            
+                        cell.style.height = `${newHeight}px`;                                                         
                     }
                 });
                 
