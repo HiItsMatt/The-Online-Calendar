@@ -168,14 +168,10 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         elements.forEach(element => {
                             element.classList.remove("enlarged");
 
-                            elements.forEach(element => {
-                                element.classList.remove('enlarged');
-    
-                                const details = element.querySelector('.calendarEventDetails');
-                                if (details) {
-                                    details.style.display = 'none';
-                                }
-                            });
+                            const details = element.querySelector('.calendarEventDetails');
+                            if (details) {
+                                details.style.display = 'none';
+                            }
                         });
                     }
                     else{
@@ -198,9 +194,19 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                             }
                         });
 
+                        if (newLeft + newWidth > window.innerWidth) {
+                            cell.style.left = `${window.innerWidth - newWidth}px`;
+                        }
+                        else if(newLeft  < 50){
+                            cell.style.left = "50px";
+                        } 
+                        else {
+                            cell.style.left = `${newLeft}px`;
+                        }
+
                         cell.style.width = `${newWidth}px`;
                         cell.style.height = `${newHeight}px`;
-                        cell.style.left = `${newLeft}px`;
+
                         cell.style.top = `${newTop}px`;                                                            
                     }
                 });
