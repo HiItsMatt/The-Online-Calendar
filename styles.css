@@ -494,6 +494,7 @@ th, td {
     font-size: 20px;
     transition: all 0.3;
     border-radius: 10px;
+    appearance: none;
 }
 
 /* Hide the default checkbox */
@@ -629,7 +630,7 @@ th, td {
     background: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    overflow: hidden; /* Ensure content doesn't overflow */
+    overflow-y: auto; /* Ensure content doesn't overflow */
     transition: height 0.3s ease;
 }
 
@@ -684,6 +685,10 @@ button.eventItem:hover{
     height: 100px;
     font-size: 30px;
     transition: all 0.3s;
+}
+
+.spacer{
+    height: 100px;
 }
 
 #clearEventsButton:hover{
@@ -838,6 +843,11 @@ button.eventItem:hover{
     transition: all 0.3;
     border-radius: 10px;
     color: black;
+}
+
+.titleContainer p{
+    margin: 0px;
+    padding: 10px;
 }
 
 .titleContainer:hover{
