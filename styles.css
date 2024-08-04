@@ -712,6 +712,11 @@ button.eventItem:hover{
     font-weight: 700;
 }
 
+.calendarEventTitle{
+    font-size: 15px;
+    font-weight: 700;
+}
+
 .eventDetail{
     padding: 5px;
 }
@@ -898,7 +903,7 @@ button.eventItem:hover{
     background: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    overflow: hidden; /* Ensure content doesn't overflow */
+    overflow:hidden; /* Ensure content doesn't overflow */
     transition: all 0.3s ease;
 }
 
@@ -906,11 +911,12 @@ button.eventItem:hover{
     font-size: 25px;
     font-weight: 700;
     padding: 10px;
+    overflow-y: scroll;
 }
 
 .calendarEventDetails{
     display: none;
     font-weight: 100;
     font-size: 15px;
-
 }
+
