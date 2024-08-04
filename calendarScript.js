@@ -404,9 +404,14 @@ function hideEventCreationMenu(){
     setTimeout(() => {
         document.getElementById("eventTitle").style.display = "none";
         document.getElementById("eventDate").style.display = "none";
+        document.getElementById("titleContainer").style.display = "none";
         document.getElementById("eventHour").style.display = "none";
         document.getElementById("eventMinute").style.display = "none";
         document.getElementById("eventPeriod").style.display = "none";
+        document.getElementById("endTitleContainer").style.display = "none";
+        document.getElementById("endEventHour").style.display = "none";
+        document.getElementById("endEventMinute").style.display = "none";
+        document.getElementById("endEventPeriod").style.display = "none";
         document.getElementById("eventDescription").style.display = "none";
         document.getElementById("eventColour").style.display = "none";
         document.getElementById("makeNewEvent").style.display = "none";
