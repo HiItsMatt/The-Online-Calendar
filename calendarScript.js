@@ -111,7 +111,20 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         calendarEvent.style.borderWidth = "2px";
                         calendarEvent.style.borderStyle = "solid";
                         calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
-                        calendarEvent.innerHTML = `${event.title} <div class="calendarEventDetails">${event.time}<br>${event.date}<br>${event.description}<br>Repeats: ${event.repeat}</div>`;
+                        calendarEvent.innerHTML = `
+                        <div class="calendarEventTitle">${event.title}</div>
+                            <div class="calendarEventDetails">
+                                <div class="eventDetail">${eventDate}</div>
+                                <div class="eventDetail">Starts: ${eventTime}</div>
+                                <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                <div class="eventDetail">${event.description}</div>
+                                <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                <div class="eventOptions">
+                                    <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                    <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                </div>
+                            </div>
+                            `;
                         calendarEvent.classList.add('calendarEvent');
 
                         eventContainer.appendChild(calendarEvent);
