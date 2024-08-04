@@ -453,7 +453,8 @@ function minimiseSidebar(){
     document.getElementById("calendarHeader").style.width = "calc(100vw - 50px)";
     document.getElementById("maximiseButton").style.display = "block";
     document.getElementById("minimiseButton").style.display = "none";
-    document.getElementById("sidebarContent").style.display = "none";
+    document.getElementById("sidebarContent").style.width = "0px";
+    document.getElementById("clearEventsButton").style.left = "-400px";
     sideBarOpen = false;
 }
 
@@ -467,7 +468,8 @@ function maximiseSidebar(){
     document.getElementById("maximiseButton").style.display = "none";
     document.getElementById("maximiseButton").style.display = "none";
     document.getElementById("minimiseButton").style.display = "block";
-    document.getElementById("sidebarContent").style.display = "block";
+    document.getElementById("sidebarContent").style.width = "400px";
+    document.getElementById("clearEventsButton").style.left = "0px";
     sideBarOpen = true;
 }
 
@@ -500,7 +502,7 @@ function showEventCreationMenu(){
     document.getElementById("eventDescription").style.display = "block";
     document.getElementById("eventColour").style.display = "block";
     document.getElementById("makeNewEvent").style.display = "block";
-    document.getElementById("repeatFrequency").style.display = "block";
+    document.getElementById("repeat").style.display = "block";
     document.getElementById("eventCreation").innerText = "- Hide Menu";
 }
 
@@ -522,6 +524,7 @@ function hideEventCreationMenu(){
         document.getElementById("endEventPeriod").style.display = "none";
         document.getElementById("eventDescription").style.display = "none";
         document.getElementById("eventColour").style.display = "none";
+        document.getElementById("repeat").style.display = "none";
         document.getElementById("makeNewEvent").style.display = "none";
     }, 300);
 }

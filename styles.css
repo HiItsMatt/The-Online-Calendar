@@ -306,6 +306,7 @@ label {
     clear: both;
     transition: all 0.3s;
     justify-content: space-between;
+    font-family: 'Raleway', sans-serif;
 }
 
 #calendarHeader h1 {
@@ -381,7 +382,7 @@ th, td {
 }
 
 #leftSidebar.minimized {
-    width: 0px;
+    width: 50px;
     overflow: hidden;
 }
 
@@ -408,7 +409,7 @@ th, td {
     height: calc(100vh - 100px);
     right: 0px;
     border: 0px solid black;
-    transition: background 0.3s;
+    transition: all 0.3s;
     font-size: 20px;
     transition: all 0.3;
     border-radius: 10px;
@@ -419,7 +420,7 @@ th, td {
     width: 50px;
     right: 0px;
     border: 0px solid black;
-    transition: background 0.3s;
+    transition: all 0.3s;
     font-size: 20px;
     transition: all 0.3;
     border-radius: 10px;
@@ -444,6 +445,11 @@ th, td {
     height: calc(100vh - 100px);
     width: calc(400px - 50px);
     overflow-y: scroll;
+    transition: all 0.3s;
+}
+
+#sidebarContent::-webkit-scrollbar {
+    display:none;
 }
 
 #eventCreation{
@@ -477,6 +483,9 @@ th, td {
     transition: height 0.3s ease;
 }
 
+.eventCreationMenu::-webkit-scrollbar {
+    display:none;
+}
 .eventCreationMenu.open{
     height: 85%;
     overflow-y: scroll;
@@ -675,7 +684,8 @@ button.eventItem:hover{
 }
 
 #clearEventsButton{
-    bottom: 0;
+    bottom: 0px;
+    left:0px;
     position: fixed;
     width: calc(350px);
     background-color: rgb(100, 0, 0);
@@ -930,3 +940,17 @@ button.eventItem:hover{
     font-size: 15px;
 }
 
+.monthChangeButton{
+    color: black;
+    background-color: white;
+    border: 2px solid transparent;
+    width: 100px;
+    transition:all 0.3s ease-in-out;
+}
+
+.monthChangeButton:hover{
+    color: white;
+    background-color: black;
+    border: 2px solid white;
+    width: 200px;
+}
