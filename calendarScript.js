@@ -384,6 +384,9 @@ function showEventCreationMenu(){
     document.getElementById("eventHour").style.display = "block";
     document.getElementById("eventMinute").style.display = "block";
     document.getElementById("eventPeriod").style.display = "block";
+    document.getElementById("endEventHour").style.display = "block";
+    document.getElementById("endEventMinute").style.display = "block";
+    document.getElementById("endEventPeriod").style.display = "block";
     document.getElementById("eventDescription").style.display = "block";
     document.getElementById("eventColour").style.display = "block";
     document.getElementById("makeNewEvent").style.display = "block";
