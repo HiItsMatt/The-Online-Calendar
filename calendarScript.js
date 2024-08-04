@@ -107,10 +107,22 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                     if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
                         let calendarEvent = document.createElement('div');
                         
+                        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })
+                        
+                    
+                        // Convert time to be more readable
+                        const eventTime = convertTo12HourFormat(event.time);
+                        const eventEndTime = convertTo12HourFormat(event.endTime);
+
+                        const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+
                         calendarEvent.style.borderColor = darkenColor(event.colour, 20);
-                        calendarEvent.style.borderWidth = "2px";
-                        calendarEvent.style.borderStyle = "solid";
                         calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                        
                         calendarEvent.innerHTML = `
                         <div class="calendarEventTitle">${event.title}</div>
                             <div class="calendarEventDetails">
