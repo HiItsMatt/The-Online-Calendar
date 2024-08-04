@@ -197,6 +197,44 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
 
                             eventContainer.appendChild(calendarEvent);
                         }
+                        else if(event.repeat == "yearly" && new Date(event.date).getDate() == date && new Date(event.date).getMonth() == currentMonth){
+                            let calendarEvent = document.createElement('div');
+
+                            const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })
+                            
+                        
+                            // Convert time to be more readable
+                            const eventTime = convertTo12HourFormat(event.time);
+                            const eventEndTime = convertTo12HourFormat(event.endTime);
+
+                            const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+
+                            calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                            calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+
+                            calendarEvent.innerHTML = `
+                            <div class="calendarEventTitle">${event.title}</div>
+                                <div class="calendarEventDetails">
+                                    <div class="eventDetail">${eventDate}</div>
+                                    <div class="eventDetail">Starts: ${eventTime}</div>
+                                    <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                    <div class="eventDetail">${event.description}</div>
+                                    <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                    <div class="eventOptions">
+                                        <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                        <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                    </div>
+                                </div>
+                                `;
+
+                            calendarEvent.classList.add('calendarEvent');
+
+                            eventContainer.appendChild(calendarEvent);
+                        }
                     }
                     
                 }
