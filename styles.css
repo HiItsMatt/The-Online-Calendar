@@ -479,6 +479,7 @@ th, td {
 
 .eventCreationMenu.open{
     height: 85%;
+    overflow-y: scroll;
 }
 
 .eventCreationField {
@@ -493,12 +494,6 @@ th, td {
     font-size: 20px;
     transition: all 0.3;
     border-radius: 10px;
-}
-
-.eventCreationField#eventDate{
-    display: block;
-    margin: 0px;
-    width: 100%;
 }
 
 /* Hide the default checkbox */
@@ -813,14 +808,51 @@ button.eventItem:hover{
 
 }
 
+#eventDate{
+    display: none;
+}
+
 .date-time{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     width: 90%;
     margin: 10px;
     margin-top: 0px;
     background-color: rgba(0,0,0,0.5);
     border-radius: 10px;
+}
+
+.titleContainer{
+    display: none;
+    width: calc(100% - 4px);
+    background-color: rgba(255,255,255,1);
+    border: 2px solid black;
+    transition: background 0.3s;
+    font-size: 20px;
+    transition: all 0.3;
+    border-radius: 10px;
+    color: black;
+}
+
+.titleContainer:hover{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+}
+
+.timeContainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 0px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+}
+
+.eventCreationMenu p{
+    font-size: 20px;
 }
 
 .dateTimeEnd{
@@ -832,15 +864,6 @@ button.eventItem:hover{
     background-color: rgba(0,0,0,0.5);
     border-radius: 10px;
 }
-
-select{
-    margin-top: 0px;
-}
-
-p{
-    margin-bottom: 0px;
-}
-
 .calendar-cell {
     position: relative;
     flex: 1 1 auto; /* Allow cells to grow and shrink */

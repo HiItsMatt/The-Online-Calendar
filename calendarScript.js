@@ -381,9 +381,11 @@ function showEventCreationMenu(){
     eventMenu.classList.add("open");
     document.getElementById("eventTitle").style.display = "block";
     document.getElementById("eventDate").style.display = "block";
+    document.getElementById("titleContainer").style.display = "block";
     document.getElementById("eventHour").style.display = "block";
     document.getElementById("eventMinute").style.display = "block";
     document.getElementById("eventPeriod").style.display = "block";
+    document.getElementById("endTitleContainer").style.display = "block";
     document.getElementById("endEventHour").style.display = "block";
     document.getElementById("endEventMinute").style.display = "block";
     document.getElementById("endEventPeriod").style.display = "block";
@@ -417,6 +419,7 @@ function createNewEvent() {
     const eventTitle = document.getElementById('eventTitle').value;
     const eventDate = document.getElementById('eventDate').value;
     const eventTime = getSelectedTime();
+    const eventEndTime = getSelectedEndTime();
     const eventDescription = document.getElementById('eventDescription').value;
     const eventColour = document.getElementById('eventColour').value;
     const repeatEvent = document.getElementById('repeatEvent');
@@ -448,6 +451,7 @@ function createNewEvent() {
         title: eventTitle,
         date: eventDateUTC,
         time: eventTimeUTC,
+        endTime: eventEndTime,
         description: eventDescription,
         colour: eventColour,
         repeat: repeatValue,
@@ -723,6 +727,18 @@ function getSelectedTime() {
     const hour = document.getElementById('eventHour').value;
     const minute = document.getElementById('eventMinute').value;
     const period = document.getElementById('eventPeriod').value;
+    if(period == "AM"){
+        return `${hour}:${minute}`;
+    }
+    else{
+        return `${parseInt(hour) + 12}:${minute}`;
+    }
+}
+
+function getSelectedEndTime() {
+    const hour = document.getElementById('endEventHour').value;
+    const minute = document.getElementById('endEventMinute').value;
+    const period = document.getElementById('endEventPeriod').value;
     if(period == "AM"){
         return `${hour}:${minute}`;
     }

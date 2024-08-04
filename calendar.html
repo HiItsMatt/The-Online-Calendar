@@ -25,83 +25,89 @@
             <div class="eventCreationMenu">
                 <button id="eventCreation" onclick="eventCreationMenu()">+ Event Creator</button>
                 <input type="text" class="eventCreationField" id="eventTitle" placeholder="Event Title">
+                <input type="date" class="eventCreationField" id="eventDate">
                 <div class="date-time">
-                    <input type="date" class="eventCreationField" id="eventDate">
+                    <div class="titleContainer" id="titleContainer">
+                        <p>Start Time</p>
+                    </div>
+                    <div class="timeContainer">
+                        <select class="eventCreationField" id="eventHour">
+                            <!-- Populate hours from 01 to 12 -->
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select class="eventCreationField" id="eventMinute">
+                            <!-- Populate minutes with 15-minute intervals -->
+                            <option value="00">00</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                            <option value="45">45</option>
+                            <option value="50">50</option>
+                            <option value="55">55</option>
+                        </select>
+                        <select class="eventCreationField" id="eventPeriod">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
                 </div>
-                <p>Start Time</p>
                 <div class="date-time">
-                    <select class="eventCreationField" id="eventHour">
-                        <!-- Populate hours from 01 to 12 -->
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    <select class="eventCreationField" id="eventMinute">
-                        <!-- Populate minutes with 15-minute intervals -->
-                        <option value="00">00</option>
-                        <option value="05">05</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="30">30</option>
-                        <option value="35">35</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                        <option value="50">50</option>
-                        <option value="55">55</option>
-                    </select>
-                    <select class="eventCreationField" id="eventPeriod">
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                    </select>
+                    <div class="titleContainer" id="endTitleContainer">
+                        <p>End Time</p>
+                    </div>
+                    <div class="timeContainer">
+                        <select class="eventCreationField" id="endEventHour">
+                            <!-- Populate hours from 01 to 12 -->
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select class="eventCreationField" id="endEventMinute">
+                            <!-- Populate minutes with 15-minute intervals -->
+                            <option value="00">00</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="35">35</option>
+                            <option value="40">40</option>
+                            <option value="45">45</option>
+                            <option value="50">50</option>
+                            <option value="55">55</option>
+                        </select>
+                        <select class="eventCreationField" id="endEventPeriod">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
                 </div>
-                <p>End Time</p>
-                <div class="dateTimeEnd">
-                    <select class="eventCreationField" id="endEventHour">
-                        <!-- Populate hours from 01 to 12 -->
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    <select class="eventCreationField" id="endEventMinute">
-                        <!-- Populate minutes with 15-minute intervals -->
-                        <option value="00">00</option>
-                        <option value="05">05</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="30">30</option>
-                        <option value="35">35</option>
-                        <option value="40">40</option>
-                        <option value="45">45</option>
-                        <option value="50">50</option>
-                        <option value="55">55</option>
-                    </select>
-                    <select class="eventCreationField" id="endEventPeriod">
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                    </select>
-                </div> 
                 <textarea id="eventDescription" class="eventCreationField" placeholder="Event Description"></textarea>
                 <input type="color" id="eventColour" value="#89cff0" ></input>
                 <div id="repeat">
