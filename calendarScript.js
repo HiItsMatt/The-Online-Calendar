@@ -96,10 +96,15 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                 //create an event container to go inside cell
                 const eventContainer = document.createElement('div');
                 eventContainer.classList.add('eventContainer');
-                eventContainer.innerHTML = `<div class="date">${date}</div>`;
-
-                //check if an event is on this date
+                eventContainer.innerHTML = `
+                    <div class="dayHeaderContainer">
+                        <div class="date">${date}</div>
+                        <button class="dayViewButton" onclick="openDayView('${DateObj}')">Open in Day View</button>
+                    </div>
+                `;
+                //check if an we need to display an event on this date
                 for(let i = 0; i < events.length; i++){
+                    
                     let event = events[i];
                     let eventDate = new Date(event.date);
 
@@ -107,7 +112,7 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                     if(eventDate.getDate() == date && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
                         let calendarEvent = document.createElement('div');
                         
-                        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                        eventDate = new Date(event.date).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric'
@@ -124,13 +129,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
                         
                         calendarEvent.innerHTML = `
-                        <div class="calendarEventTitle">${event.title}</div>
+                            <div class="calendarEventTitle">${event.title}</div>
                             <div class="calendarEventDetails">
                                 <div class="eventDetail">${eventDate}</div>
-                                <div class="eventDetail">Starts: ${eventTime}</div>
-                                <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
                                 <div class="eventDetail">${event.description}</div>
-                                <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
                                 <div class="eventOptions">
                                     <button class="eventEdit" onclick="eventEdit()">Edit</button>
                                     <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
@@ -166,13 +170,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                             calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
                             calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
+                                <div class="calendarEventTitle">${event.title}</div>
                                 <div class="calendarEventDetails">
                                     <div class="eventDetail">${eventDate}</div>
-                                    <div class="eventDetail">Starts: ${eventTime}</div>
-                                    <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                    <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
                                     <div class="eventDetail">${event.description}</div>
-                                    <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                    <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
                                     <div class="eventOptions">
                                         <button class="eventEdit" onclick="eventEdit()">Edit</button>
                                         <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
@@ -204,13 +207,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                             calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
                             calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
+                                <div class="calendarEventTitle">${event.title}</div>
                                 <div class="calendarEventDetails">
                                     <div class="eventDetail">${eventDate}</div>
-                                    <div class="eventDetail">Starts: ${eventTime}</div>
-                                    <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                    <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
                                     <div class="eventDetail">${event.description}</div>
-                                    <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                    <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
                                     <div class="eventOptions">
                                         <button class="eventEdit" onclick="eventEdit()">Edit</button>
                                         <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
@@ -242,13 +244,12 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                             calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
                             calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
+                                <div class="calendarEventTitle">${event.title}</div>
                                 <div class="calendarEventDetails">
                                     <div class="eventDetail">${eventDate}</div>
-                                    <div class="eventDetail">Starts: ${eventTime}</div>
-                                    <div class="eventDetail">Ends: ${eventEndTime}</div>
+                                    <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
                                     <div class="eventDetail">${event.description}</div>
-                                    <div class="eventDetail">Repeats: ${event.repeat}</div>
+                                    <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
                                     <div class="eventOptions">
                                         <button class="eventEdit" onclick="eventEdit()">Edit</button>
                                         <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
@@ -274,6 +275,14 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         cell.style.width = '';
                         cell.style.height = '';
 
+                        const viewDayButton = cell.querySelector('.dayViewButton');
+                        viewDayButton.style.display = 'none';
+
+                        const date = cell.querySelector('.date');
+                        date.style.fontSize = '15px';
+                        date.style.fontWeight = 'normal';
+                        date.style.margin = "0px";
+
                         const elements = cell.querySelectorAll(`.${"calendarEvent"}`);
                         elements.forEach(element => {
                             element.classList.remove("enlarged");
@@ -293,6 +302,14 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         const newHeight = 400;
                         const newLeft = rect.left + (0.5 * rect.width) - (0.5 * newWidth);
                         const newTop = rect.top + (0.5 * rect.height) - (0.5 * newHeight);
+
+                        const viewDayButton = cell.querySelector('.dayViewButton');
+                        viewDayButton.style.display = 'block';
+
+                        const date = cell.querySelector('.date');
+                        date.style.fontSize = '25px';
+                        date.style.fontWeight = 'bold';
+                        date.style.margin = "10px";
                         
                         
                         const elements = cell.querySelectorAll('.calendarEvent');
@@ -356,6 +373,113 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
     }
 
     displayStoredEvents();
+}
+
+function openDayView(DateObj){
+    const dayView = document.getElementById("dayView");
+    const sidebarContent = document.getElementById("sidebarContent");
+    const title = document.getElementById("dayViewDate");
+    const dayViewHeader = document.getElementById("dayViewHeader");
+    const dayViewContent = document.getElementById("dayViewContent");
+
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+    
+    //display current date in the day view
+    currentDate = new Date(DateObj);
+    title.textContent = currentDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    //hide the normal sidebar
+    sidebarContent.style.width = "0px";
+    setTimeout(() => {sidebarContent.style.display = "none";}, 300);
+    
+    //display the day view
+    dayView.style.display = "block";
+    dayView.style.width = "calc(400px - 50px)";
+
+    //use the header as the close button for the day view
+    dayViewHeader.addEventListener('mouseover', () => {
+        title.textContent = "Close Day";
+    });
+    dayViewHeader.addEventListener('mouseout', () => {
+        title.textContent = currentDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    });
+
+    for(i = 0; i < 24; i++){
+        const hour = document.createElement('div');
+        hour.classList.add('hour');
+        if(i > 12){
+            hour.textContent = `${i - 12} PM`;
+        }
+        else if( i == 0){
+            hour.textContent = `12 AM`;
+        }
+        else if(i == 12){
+            hour.textContent = `12 PM`;
+        }
+        else{
+            hour.textContent = `${i} AM`;
+        }
+        dayViewContent.appendChild(hour);
+    }
+
+    for(i = 0; i < events.length; i++){
+        let event = events[i]
+        let eventDate = new Date(event.date);
+
+        if(eventDate.getDate() == currentDate.getDate() && eventDate.getMonth() == currentMonth && eventDate.getFullYear() == currentYear){
+            let eventTime = new Date(event.date + "T" + event.time);
+            let eventEndTime = new Date(event.date + "T" + event.endTime);
+            
+            let eventDiv = document.createElement('div');
+
+            //find difference between start time and end time
+            let timeDifference = (eventEndTime - eventTime) / (1000 * 60);
+            console.log(timeDifference);
+            eventHeight = (timeDifference / 60) * 100;
+
+            //find difference between start time and midnight
+            let midnight = new Date(event.date + "T00:00:00");
+            let timeDifferenceFromMidnight = (eventTime - midnight) / (1000 * 60);
+            console.log(timeDifferenceFromMidnight);
+            eventStart = (timeDifferenceFromMidnight / 60) * 100;
+            
+            eventDiv.classList.add('event');
+            eventDiv.style.position = "absolute";
+            eventDiv.style.width = "80%";
+            eventDiv.style.right = "0";
+            eventDiv.style.top = `${eventStart}px`;
+            eventDiv.style.height = `${eventHeight}px`;
+            eventDiv.style.backgroundColor = convertToRGBA(event.colour,0.5);
+            eventDiv.style.border = `2px solid ${darkenColor(event.colour, 50)}`;
+            eventDiv.innerHTML = `
+                <div class="eventTitle">${event.title}</div>
+                <div class="eventTime">${convertTo12HourFormat(event.time)} - ${convertTo12HourFormat(event.endTime)}</div>
+                <div class="eventDescription">${event.description}</div>
+            `;
+            dayViewContent.appendChild(eventDiv);
+        }
+    }
+
+}
+
+
+
+function closeDayView(){
+    const dayView = document.getElementById("dayView");
+    const sidebarContent = document.getElementById("sidebarContent");
+
+    dayView.style.width = "0px";
+    setTimeout(() => {dayView.style.display = "none";}, 300);
+    sidebarContent.style.display = "block";
+    sidebarContent.style.width = "calc(400px - 50px)";
 }
 
 //get the current month based on the month number
@@ -736,16 +860,16 @@ function toggleEventDetail(eventItem, event, days, hours) {
     } else {
         eventItem.classList.add('detailsVisible');
         eventItem.innerHTML = `
-       <div class="eventTitle">${event.title}</div>
+        <div class="eventTitle">${event.title}</div>
             <div class="eventDetails">
                 <div class="eventDetail">${eventDate}</div>
-                <div class="eventDetail">Starts: ${eventTime}</div>
-                <div class="eventDetail">Ends: ${eventEndTime}</div>
+                <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
                 <div class="eventDetail">${event.description}</div>
-                <div class="eventDetail">repeats: ${event.repeat}</div>
+                <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
                 <div class="eventOptions">
                     <button class="eventEdit" onclick="eventEdit()">Edit</button>
                     <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                    <button class="dayViewButton" onclick="viewDay(${eventDate})">View Day</button>
                 </div>
             </div>
         `;

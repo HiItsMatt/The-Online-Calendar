@@ -452,6 +452,63 @@ th, td {
     display:none;
 }
 
+#dayView{
+    display: none;
+    height: calc(100vh - 100px);
+    width: calc(400px - 50px);
+    overflow-y: scroll;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+#dayView::-webkit-scrollbar {
+    display:none;
+}
+
+#dayViewHeader{
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    transition: all 0.3s;
+    border:2px solid transparent;
+}
+
+#dayViewContent{
+    position: relative;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    transition: all 0.3s;
+    border:2px solid transparent;
+    overflow: hidden;
+}
+
+.hour{
+    height:99px;
+    text-align: left;
+    padding:0px;
+    margin:0px;
+    border: 1px solid black;
+}
+
+.event{
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 10px;
+    color: black;
+}
+
+#dayViewHeader:hover{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+}
+
 #eventCreation{
     width: 90%;
     padding: 10px;
@@ -741,7 +798,7 @@ button.eventItem:hover{
     justify-content: space-between;
 }
 
-.eventEdit, .eventDelete {
+.eventEdit, .eventDelete{
     flex: 1;
     text-align: center;
     padding: 10px;
@@ -751,6 +808,44 @@ button.eventItem:hover{
     background-color: #f0f0f0;
     cursor: pointer;
 }
+
+
+
+.dayViewButton {
+    display: none;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.5); /* Blue */
+    color: white;
+    transition: all 0.3s;
+    width: 200px;   
+}
+
+.dayViewButton:hover {
+    background-color: #72bfff;
+    box-shadow: 0 0 20px #2196f3; /* Add glowing effect */
+}
+
+#dayView{
+    display:none;
+}
+
+.date.enlarged{
+    font-size: 20px;  
+}
+
+.dayHeaderContainer{
+    display: flex;
+    justify-content:space-between;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+
 
 .eventEdit {
     background-color: #4CAF50; /* Green */
@@ -927,6 +1022,10 @@ button.eventItem:hover{
     transition: all 0.3s ease;
 }
 
+.calendarEvent::-webkit-scrollbar {
+    display:none;
+}
+
 .calendarEvent.enlarged{
     font-size: 25px;
     font-weight: 700;
@@ -954,3 +1053,4 @@ button.eventItem:hover{
     border: 2px solid white;
     width: 200px;
 }
+
