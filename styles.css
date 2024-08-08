@@ -474,6 +474,20 @@ th, td {
     text-align: center;
     transition: all 0.3s;
     border:2px solid transparent;
+    width: 100%;
+}
+
+#closeDayView{
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    transition: all 0.3s;
+    border:2px solid transparent;
+    width: 100px;
+    height: 100px;
 }
 
 #dayViewContent{
@@ -1054,3 +1068,25 @@ button.eventItem:hover{
     width: 200px;
 }
 
+#dayViewHeaderContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+#closeDayView{
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    height: 100px;
+    width: 100px;
+}
+
+#closeDayView:hover{
+    background-color: black;
+    border: 2px solid white;
+    color: red;
+    box-shadow: 0 0 20px #ff0000; /* Add glowing effect */
+}
+}

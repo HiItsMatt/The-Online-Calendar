@@ -137,8 +137,11 @@
             <button id="clearEventsButton" onclick="clearEvents()">Clear All Events</button>
         </div>
         <div id="dayView">
-            <div id="dayViewHeader"  onclick="closeDayView()">
-                <h2 id="dayViewDate"></h2>
+            <div id="dayViewHeaderContainer">
+                <div id="dayViewHeader"  onclick="closeDayView()">
+                    <h2 id="dayViewDate"></h2>
+                </div>
+                <button id="closeDayView" onclick="closeDayView()">x</button>
             </div>
             <div id="dayViewContent">
                 

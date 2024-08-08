@@ -412,6 +412,8 @@ function openDayView(DateObj){
         });
     });
 
+    dayViewContent.innerHTML = '';
+
     for(i = 0; i < 24; i++){
         const hour = document.createElement('div');
         hour.classList.add('hour');
