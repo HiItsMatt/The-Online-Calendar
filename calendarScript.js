@@ -37,6 +37,7 @@ function onLoad() {
     });
 
     
+
 }
 
 function loadCalender(targetMonth, targetYear, currentDate, today) {
@@ -617,6 +618,14 @@ function showEventCreationMenu(){
     eventMenu.classList.add("open");
     document.getElementById("eventTitle").style.display = "block";
     document.getElementById("eventDate").style.display = "block";
+    
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    document.getElementById("eventDate").value = formattedDate;
+
     document.getElementById("titleContainer").style.display = "block";
     document.getElementById("eventHour").style.display = "block";
     document.getElementById("eventMinute").style.display = "block";
