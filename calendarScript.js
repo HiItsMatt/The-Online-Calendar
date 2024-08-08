@@ -471,6 +471,59 @@ function openDayView(DateObj){
         }
     }
 
+    if(new Date().getDate() == currentDate.getDate()){
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+
+        // Calculate the position of the line
+        const dayView = document.getElementById("dayView");
+        const dayViewHeight = dayView.clientHeight;
+        const totalMinutesInDay = 24 * 60;
+        const currentMinutes = hours * 60 + minutes;
+        const positionPercentage = (currentMinutes / totalMinutesInDay) * 100;
+
+        // Create the right line element
+        const rightTimeLine = document.createElement("div");
+        rightTimeLine.id = "rightTimeLine";
+        rightTimeLine.style.position = "absolute";
+        rightTimeLine.style.top = positionPercentage + "%";
+        rightTimeLine.style.right = "0";
+        rightTimeLine.style.width = "80%";
+        rightTimeLine.style.height = "2px";
+        rightTimeLine.style.backgroundColor = "red";
+        rightTimeLine.style.zIndex = "10"; // Ensure the line is above other elements
+        
+        //create the left line element
+        const leftTimeLine = document.createElement("div");
+        leftTimeLine.id = "leftTimeLine";
+        leftTimeLine.style.position = "absolute";
+        leftTimeLine.style.top = positionPercentage + "%";
+        leftTimeLine.style.left = "0";
+        leftTimeLine.style.width = "5%";
+        leftTimeLine.style.height = "2px";
+        leftTimeLine.style.backgroundColor = "red";
+        leftTimeLine.style.zIndex = "10"; // Ensure the line is above other elements
+
+        const textTimeLine = document.createElement("div");
+        textTimeLine.id = "textTimeLine";
+        textTimeLine.innerHTML='NOW';
+        textTimeLine.style.position = "absolute";
+        textTimeLine.style.top = `calc(${positionPercentage}% - 7px)`;
+        textTimeLine.style.left = "7%";
+        textTimeLine.style.color = "red";
+        textTimeLine.style.width = "5%";
+        textTimeLine.style.height = "10px";
+        textTimeLine.style.zIndex = "10"; // Ensure the line is above other elements
+
+
+
+        // Append the line element to the day view
+        dayViewContent.appendChild(rightTimeLine);
+        dayViewContent.appendChild(leftTimeLine);
+        dayViewContent.appendChild(textTimeLine);
+    }
+
 }
 
 

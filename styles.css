@@ -1089,4 +1089,8 @@ button.eventItem:hover{
     color: red;
     box-shadow: 0 0 20px #ff0000; /* Add glowing effect */
 }
+
+.currentTime{
+    height:0px;
+    border-top:2px solid red;
 }
