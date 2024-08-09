@@ -797,6 +797,8 @@ function hideEventCreationMenu(){
     }, 300);
 }
 
+let recentCreatedIndex = -1;
+
 //use the values in the input fields to create a new event object and store it at the correct position in the events array, then store the event to local storage
 function createNewEvent() {
     // Get the values of the input fields
@@ -859,6 +861,7 @@ function createNewEvent() {
         const currentEventDateTime = new Date(`${events[i].date}T${events[i].time}`);
         if (eventDateTime < currentEventDateTime) {
             insertIndex = i;
+            recentCreatedIndex = i;
             break;
         }
     }
@@ -866,13 +869,16 @@ function createNewEvent() {
     // Insert the new event at the correct position
     events.splice(insertIndex, 0, event);
 
+    recentCreatedIndex = insertIndex;
+
     // Convert the updated array back to a JSON string
     const eventsJSON = JSON.stringify(events);
 
     // Store the updated JSON string in localStorage
     localStorage.setItem('events', eventsJSON);
 
-
+    console.log(recentCreatedIndex);
+    hideEventCreationMenu();
     onload();
 }
 
@@ -900,7 +906,8 @@ function displayStoredEvents() {
         }
     }
 
-    events.forEach(event => {
+    for(let i = 0;i < events.length; i++){
+        let event = events[i];
         const eventDateTime = new Date(`${event.date}T${event.time}`);
         const timeDiff = eventDateTime - now;
 
@@ -939,8 +946,20 @@ function displayStoredEvents() {
             eventItem.onclick = function () {
                 toggleEventDetail(eventItem, event, days, hours);
             };
+            console.log(recentCreatedIndex);
+            if(recentCreatedIndex != -1 && i == recentCreatedIndex){
+                eventItem.style.backgroundColor = "rgba(100, 255, 100, 0.5)";
+                eventItem.style.boxShadow = "0 0 20px rgba(0, 255, 0, 1)";
+                eventItem.style.border = "2px solid rgba(200, 255, 200, 1)";
+                setTimeout(() => {
+                    eventItem.style.backgroundColor = event.colour;
+                    eventItem.style.boxShadow = "none";
+                    eventItem.style.border = `2px solid ${darkenColor(event.colour, 40)}`;
+                }, 1000);
+                recentCreatedIndex = -1; 
+            }
         }
-    });
+    }
 }
 
 // Example implementation of getClosestRepeatEvent function
