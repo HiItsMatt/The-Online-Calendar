@@ -896,7 +896,29 @@ function displayStoredEvents() {
     const eventListItems = document.getElementById('eventListItems');
     eventListItems.innerHTML = ''; // Clear existing events
 
-    if (events.length === 0) {
+    // Update events to their next occurrence if they have a repeat frequency
+    for(let i = 0 ; i < events.length; i++){
+        if(events[i].repeatFrequency !== "none"){
+            events[i] = getClosestRepeatEvent(events[i], nowUTC);
+        }
+    }
+
+    let futureEvents = [];
+    
+    for(let i = 0; i < events.length; i++){
+        let event = events[i];
+        const eventDateTime = new Date(`${event.date}T${event.time}`);
+        const timeDiff = eventDateTime - now;
+
+        let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        if(days > 0 || hours >= 0){
+            futureEvents.push(event);
+        }
+    }
+
+    if (futureEvents.length == 0) {
         // Create and display a message box if there are no future events
         const noEventsBox = document.createElement('button');
         noEventsBox.className = 'noEventsBox';
@@ -905,22 +927,15 @@ function displayStoredEvents() {
         return;
     }
 
-    // Update events to their next occurrence if they have a repeat frequency
-    for(let i = 0 ; i < events.length; i++){
-        if(events[i].repeatFrequency !== "none"){
-            events[i] = getClosestRepeatEvent(events[i], nowUTC);
-        }
-    }
-
-    for(let i = 0;i < events.length; i++){
-        let event = events[i];
+    for(let i = 0;i < futureEvents.length; i++){
+        let event = futureEvents[i];
         const eventDateTime = new Date(`${event.date}T${event.time}`);
         const timeDiff = eventDateTime - now;
 
         let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        if(days >= 0 || hours >= 0){
+        if(days > 0 || hours >= 0){
             const eventItem = document.createElement('button');
             eventItem.className = 'eventItem';
             if (days === 0) {
