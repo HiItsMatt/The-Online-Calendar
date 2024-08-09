@@ -949,7 +949,7 @@ function displayStoredEvents() {
             eventItem.onclick = function () {
                 toggleEventDetail(eventItem, event, days, hours);
             };
-            
+
             //animate event when it is created
             if(recentCreatedIndex != -1 && i == recentCreatedIndex){
                 eventItem.style.backgroundColor = "rgba(100, 255, 100, 0.5)";
@@ -1124,7 +1124,7 @@ function eventDelete(event){
 
         currentDate = new Date();
         onload();
-        openDayView(currentDate);
+        closeDayView();
     }
 }
 
