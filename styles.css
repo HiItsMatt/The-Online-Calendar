@@ -557,8 +557,7 @@ th, td {
     display:none;
 }
 .eventCreationMenu.open{
-    height: 85%;
-    overflow-y: scroll;
+    height: 100%;
 }
 
 .eventCreationField {
