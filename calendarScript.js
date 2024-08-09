@@ -920,18 +920,6 @@ function displayStoredEvents() {
         let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        if(event.repeat =="weekly"){
-            if (days < 0 || (days === 0 && hours < 0)) {
-                if(days < 0){
-                    days =+ 7;
-                }
-                if(hours < 0){
-                    days -= 1;
-                    hours += 24;
-                }
-            }
-        }
-
         if(days > 0 || hours > 0){
             const eventItem = document.createElement('button');
             eventItem.className = 'eventItem';
@@ -1145,7 +1133,13 @@ function getSelectedTime() {
     const hour = document.getElementById('eventHour').value;
     const minute = document.getElementById('eventMinute').value;
     const period = document.getElementById('eventPeriod').value;
-    if(period == "AM"){
+    if(period == "AM" && hour == "12"){
+        return `${parseInt(hour) - 12}:${minute}`;
+    }
+    else if(period == "AM"){
+        return `${hour}:${minute}`;
+    }
+    else if(period == "PM" && hour == "12"){
         return `${hour}:${minute}`;
     }
     else{
