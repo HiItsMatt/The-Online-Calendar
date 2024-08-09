@@ -920,7 +920,7 @@ function displayStoredEvents() {
         let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        if(days > 0 || hours > 0){
+        if(days >= 0 || hours >= 0){
             const eventItem = document.createElement('button');
             eventItem.className = 'eventItem';
             if (days === 0) {
