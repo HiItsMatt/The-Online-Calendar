@@ -376,6 +376,8 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
 }
 
 function openDayView(DateObj){
+    maximiseSidebar();
+
     const dayView = document.getElementById("dayView");
     const sidebarContent = document.getElementById("sidebarContent");
     const title = document.getElementById("dayViewDate");
@@ -706,6 +708,7 @@ function getDayOfWeek(num){
 
 //hide sidebar
 function minimiseSidebar(){
+    closeDayView();
     document.getElementById("leftSidebar").style.width = "50px";
     document.getElementsByClassName("mainCalendar")[0].style.marginLeft = "50px";
     document.getElementsByClassName("mainCalendar")[0].style.width = "calc(100vw - 50px)";
