@@ -797,6 +797,9 @@ function hideEventCreationMenu(){
     }, 300);
 }
 
+//variable for storing the index of the most recently created event
+//used to animate the event when it is created
+//-1 means that all events have shown their animation so no animation will be shown
 let recentCreatedIndex = -1;
 
 //use the values in the input fields to create a new event object and store it at the correct position in the events array, then store the event to local storage
@@ -861,7 +864,6 @@ function createNewEvent() {
         const currentEventDateTime = new Date(`${events[i].date}T${events[i].time}`);
         if (eventDateTime < currentEventDateTime) {
             insertIndex = i;
-            recentCreatedIndex = i;
             break;
         }
     }
@@ -869,6 +871,7 @@ function createNewEvent() {
     // Insert the new event at the correct position
     events.splice(insertIndex, 0, event);
 
+    // Update the recentCreatedIndex to the index of the most recently created event
     recentCreatedIndex = insertIndex;
 
     // Convert the updated array back to a JSON string
@@ -946,7 +949,8 @@ function displayStoredEvents() {
             eventItem.onclick = function () {
                 toggleEventDetail(eventItem, event, days, hours);
             };
-            console.log(recentCreatedIndex);
+            
+            //animate event when it is created
             if(recentCreatedIndex != -1 && i == recentCreatedIndex){
                 eventItem.style.backgroundColor = "rgba(100, 255, 100, 0.5)";
                 eventItem.style.boxShadow = "0 0 20px rgba(0, 255, 0, 1)";
@@ -956,6 +960,7 @@ function displayStoredEvents() {
                     eventItem.style.boxShadow = "none";
                     eventItem.style.border = `2px solid ${darkenColor(event.colour, 40)}`;
                 }, 1000);
+                //reset recentCreatedIndex to -1 so the event is not animated the next time the page is loaded
                 recentCreatedIndex = -1; 
             }
         }
