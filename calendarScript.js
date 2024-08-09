@@ -357,7 +357,7 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                 });
                 cell.addEventListener('mouseout', () => {
                     cell.style.backgroundColor = "rgba(255,255,255, 0.4)";
-                    
+
                 });
                 
                 // Highlight the current date
@@ -871,6 +871,8 @@ function createNewEvent() {
 
     // Store the updated JSON string in localStorage
     localStorage.setItem('events', eventsJSON);
+
+
     onload();
 }
 
@@ -1054,6 +1056,7 @@ function clearEvents() {
     setTimeout(() => {
         confirmationDialog.style.height = '50px';
     }, 50)
+    onLoad();
 }
 
 function clearAllEvents(){
@@ -1086,7 +1089,7 @@ function eventDelete(event){
     if (userConfirmed) {
         const events = JSON.parse(localStorage.getItem('events')) || [];
         for (let i = 0; i < events.length; i++) {
-            if (events[i].title == event.title) {
+            if (events[i].title == event.title && events[i].date == event.date && events[i].time == event.time) {
                 events.splice(i, 1);
                 break;
             }
@@ -1094,8 +1097,10 @@ function eventDelete(event){
         const eventsJSON = JSON.stringify(events);
         // Store the updated JSON string in localStorage
         localStorage.setItem('events', eventsJSON);
-        onload();
 
+        currentDate = new Date();
+        onload();
+        openDayView(currentDate);
     }
 }
 

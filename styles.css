@@ -474,7 +474,6 @@ th, td {
     text-align: center;
     transition: all 0.3s;
     border:2px solid transparent;
-    width: 100%;
 }
 
 #closeDayView{
