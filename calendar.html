@@ -115,11 +115,12 @@
                     <input type="checkbox" id="repeatEvent" class="custom-checkbox" onclick="displayRepeatOptions()">
                     <label for="repeatEvent">Repeat</label>
                     <select id="repeatFrequency" class="repeatFrequency">
-                        <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
                         <option value="yearly">Yearly</option>
                     </select>
+                    <button id="eventEndDate" class onclick="displayEndDateOptions()">Repeat Forever</button>
+                    <input type="date" id="endDate" class="eventCreationField">
                 </div>
                 <button id="makeNewEvent" onclick="createNewEvent()">Create</button>
             </div>

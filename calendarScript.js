@@ -147,120 +147,242 @@ function loadCalender(targetMonth, targetYear, currentDate, today) {
                         eventContainer.appendChild(calendarEvent);
                         
                     }
-                    //check if a weekly event is repeating on this date
-                    else if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
-                    
-                        let calendarEvent = document.createElement('div');
 
-                        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })
-                        
-                    
-                        // Convert time to be more readable
-                        const eventTime = convertTo12HourFormat(event.time);
-                        const eventEndTime = convertTo12HourFormat(event.endTime);
+                    else if(event.repeat != "none"){
+                        if(event.endDate == "forever"){
+                            //check if a weekly event is repeating on this date
+                            if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek){
+                            
+                                let calendarEvent = document.createElement('div');
 
-                        const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
 
-                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
-                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
 
-                        calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
-                            <div class="calendarEventDetails">
-                                <div class="eventDetail">${eventDate}</div>
-                                <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
-                                <div class="eventDetail">${event.description}</div>
-                                <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
-                                <div class="eventOptions">
-                                    <button class="eventEdit" onclick="eventEdit()">Edit</button>
-                                    <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
-                                </div>
-                            </div>
-                            `;
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
-                        calendarEvent.classList.add('calendarEvent');
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventDetail"><b>Until:</b> ${event.endDate}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
 
-                        eventContainer.appendChild(calendarEvent);
-                    }
-                    //check if a monthly event is repeating on this date
-                    else if(event.repeat == "monthly" && new Date(event.date).getDate() == date){
-                        let calendarEvent = document.createElement('div');
+                                calendarEvent.classList.add('calendarEvent');
 
-                        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })
-                        
-                    
-                        // Convert time to be more readable
-                        const eventTime = convertTo12HourFormat(event.time);
-                        const eventEndTime = convertTo12HourFormat(event.endTime);
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                            //check if a monthly event is repeating on this date
+                            else if(event.repeat == "monthly" && new Date(event.date).getDate() == date){
+                                let calendarEvent = document.createElement('div');
 
-                        const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
 
-                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
-                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
 
-                        calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
-                            <div class="calendarEventDetails">
-                                <div class="eventDetail">${eventDate}</div>
-                                <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
-                                <div class="eventDetail">${event.description}</div>
-                                <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
-                                <div class="eventOptions">
-                                    <button class="eventEdit" onclick="eventEdit()">Edit</button>
-                                    <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
-                                </div>
-                            </div>
-                            `;
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
-                        calendarEvent.classList.add('calendarEvent');
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
 
-                        eventContainer.appendChild(calendarEvent);
-                    }
-                    //check if a yearly event is repeating on this date
-                    else if(event.repeat == "yearly" && new Date(event.date).getDate() == date && new Date(event.date).getMonth() == currentMonth){
-                        let calendarEvent = document.createElement('div');
+                                calendarEvent.classList.add('calendarEvent');
 
-                        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })
-                        
-                    
-                        // Convert time to be more readable
-                        const eventTime = convertTo12HourFormat(event.time);
-                        const eventEndTime = convertTo12HourFormat(event.endTime);
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                            //check if a yearly event is repeating on this date
+                            else if(event.repeat == "yearly" && new Date(event.date).getDate() == date && new Date(event.date).getMonth() == currentMonth){
+                                let calendarEvent = document.createElement('div');
 
-                        const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
 
-                        calendarEvent.style.borderColor = darkenColor(event.colour, 20);
-                        calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
 
-                        calendarEvent.innerHTML = `
-                            <div class="calendarEventTitle">${event.title}</div>
-                            <div class="calendarEventDetails">
-                                <div class="eventDetail">${eventDate}</div>
-                                <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
-                                <div class="eventDetail">${event.description}</div>
-                                <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
-                                <div class="eventOptions">
-                                    <button class="eventEdit" onclick="eventEdit()">Edit</button>
-                                    <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
-                                </div>
-                            </div>
-                            `;
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
 
-                        calendarEvent.classList.add('calendarEvent');
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
 
-                        eventContainer.appendChild(calendarEvent);
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                        }
+                        else{
+                            if(event.repeat == "weekly" && event.dayOfWeek == dayOfWeek && new Date(event.endDate).getTime() >= DateObj.getTime()){
+                            
+                                let calendarEvent = document.createElement('div');
+
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
+
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
+
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                            //check if a monthly event is repeating on this date
+                            else if(event.repeat == "monthly" && new Date(event.date).getDate() == date && new Date(event.endDate).getTime() >= DateObj.getTime()){
+                                let calendarEvent = document.createElement('div');
+
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
+
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
+
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                            //check if a yearly event is repeating on this date
+                            else if(event.repeat == "yearly" && new Date(event.date).getDate() == date && new Date(event.date).getMonth() == currentMonth && new Date(event.endDate).getTime() >= DateObj.getTime()){
+                                let calendarEvent = document.createElement('div');
+
+                                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })
+                                
+                            
+                                // Convert time to be more readable
+                                const eventTime = convertTo12HourFormat(event.time);
+                                const eventEndTime = convertTo12HourFormat(event.endTime);
+
+                                const escapedEvent = JSON.stringify(event).replace(/"/g, '&quot;');
+
+                                calendarEvent.style.borderColor = darkenColor(event.colour, 20);
+                                calendarEvent.style.backgroundColor = convertToRGBA(event.colour,0.5);
+
+                                calendarEvent.innerHTML = `
+                                    <div class="calendarEventTitle">${event.title}</div>
+                                    <div class="calendarEventDetails">
+                                        <div class="eventDetail">${eventDate}</div>
+                                        <div class="eventDetail">${eventTime} - ${eventEndTime}</div>
+                                        <div class="eventDetail">${event.description}</div>
+                                        <div class="eventDetail"><b>Repeats:</b> ${event.repeat}</div>
+                                        <div class="eventOptions">
+                                            <button class="eventEdit" onclick="eventEdit()">Edit</button>
+                                            <button class="eventDelete" onclick="eventDelete(${escapedEvent})">Delete</button>
+                                        </div>
+                                    </div>
+                                    `;
+
+                                calendarEvent.classList.add('calendarEvent');
+
+                                eventContainer.appendChild(calendarEvent);
+                            }
+                        }
                     }
                 }
                 cell.appendChild(eventContainer);
@@ -816,6 +938,7 @@ function createNewEvent() {
     const eventColour = document.getElementById('eventColour').value;
     const repeatEvent = document.getElementById('repeatEvent');
     const repeatFrequency = document.getElementById('repeatFrequency').value;
+    let eventEndDateElement = document.getElementById('endDate');
 
     // Validation checks
     if (!eventTitle || !eventDate || !eventTime || !eventDescription || !eventColour) {
@@ -828,6 +951,18 @@ function createNewEvent() {
     }
     else{
         repeatValue = "none";
+    }
+
+    let eventEndDate;
+
+    if(repeatValue == "none"){
+        eventEndDate = "no-repeat";
+    }
+    else if(displayEndDate == false){
+        eventEndDate = "forever"
+    }
+    else{
+        eventEndDate = eventEndDateElement.value;
     }
 
     const eventDateTime = new Date(`${eventDate}T${eventTime}:00.000Z`);
@@ -847,7 +982,8 @@ function createNewEvent() {
         description: eventDescription,
         colour: eventColour,
         repeat: repeatValue,
-        dayOfWeek: dayOfWeek
+        dayOfWeek: dayOfWeek,
+        endDate: eventEndDate
     };
 
     // Get the JSON string of events from localStorage
@@ -1134,15 +1270,51 @@ function eventDelete(event){
     }
 }
 
+let displayEndDate = false;
+
 function displayRepeatOptions() {
-    var checkbox = document.getElementById('repeatEvent');
-    var select = document.getElementById('repeatFrequency');
+    let checkbox = document.getElementById('repeatEvent');
+    let select = document.getElementById('repeatFrequency');
+    let endDate = document.getElementById('eventEndDate');
+    let endDateSelector = document.getElementById('endDate');
+    
     if (checkbox.checked) {
         select.style.display = 'block';
+        endDate.style.display = 'block';
     } else {
         select.style.display = 'none';
+        endDate.style.display = 'none';
+        endDateSelector.style.display = 'none';
+        if(displayEndDate == true){
+            displayEndDateOptions();
+        }
     }
 }
+
+
+
+function displayEndDateOptions(){
+    var endDateButton = document.getElementById('eventEndDate');
+    var endDateOptions = document.getElementById('endDate');
+
+    if (displayEndDate) {
+        displayEndDate = false;
+        endDateButton.textContent = "Repeat Forever";
+        endDateButton.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+        endDateButton.style.color = 'rgba(0, 0, 0, 1)';
+        endDateButton.style.border = '2px solid rgba(255, 255, 255, 1)';
+        endDateOptions.style.display = 'none';
+    }
+    else{
+        displayEndDate = true;
+        endDateButton.textContent = "Repeat Until:";
+        endDateButton.style.backgroundColor = 'rgba(0, 0, 0, 1)';
+        endDateButton.style.color = 'rgba(255, 255, 255, 1)';
+        endDateButton.style.border = '2px solid rgba(255, 255, 255, 1)';
+        endDateOptions.style.display = 'block';
+    }
+}
+
 
 function getSelectedTime() {
     const hour = document.getElementById('eventHour').value;
